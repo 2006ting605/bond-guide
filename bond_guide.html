@@ -1,0 +1,2687 @@
+<!DOCTYPE html>
+<html lang="zh-TW">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>債市怪獸圖鑑｜美債<span class="term">殖利率<span class="en">（Yield）</span></span>完全解析</title>
+<style>
+  @import url('https://fonts.googleapis.com/css2?family=Noto+Serif+TC:wght@300;400;600;700;900&family=Playfair+Display:ital,wght@0,700;1,400&family=JetBrains+Mono:wght@400;600&display=swap');
+
+  :root {
+    --ink: #1a1008;
+    --paper: #faf6ef;
+    --paper2: #f2ebe0;
+    --accent: #c0392b;
+    --accent2: #e67e22;
+    --accent3: #2c3e50;
+    --gold: #b8860b;
+    --muted: #8b7355;
+    --border: #d4c9b0;
+    --easy: #27ae60;
+    --mid: #e67e22;
+    --hard: #c0392b;
+    --expert: #8e44ad;
+  }
+
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+
+  body {
+    font-family: 'Noto Serif TC', serif;
+    background: var(--paper);
+    color: var(--ink);
+    line-height: 1.8;
+    overflow-x: hidden;
+  }
+
+  /* HERO */
+  .hero {
+    background: var(--ink);
+    color: var(--paper);
+    padding: 80px 40px 60px;
+    text-align: center;
+    position: relative;
+    overflow: hidden;
+  }
+  .hero::before {
+    content: '';
+    position: absolute; inset: 0;
+    background: repeating-linear-gradient(
+      -45deg,
+      transparent, transparent 30px,
+      rgba(192,57,43,0.06) 30px, rgba(192,57,43,0.06) 31px
+    );
+    pointer-events: none;
+  }
+  .hero-badge {
+    display: inline-block;
+    border: 1px solid var(--accent);
+    color: var(--accent);
+    font-size: 11px;
+    letter-spacing: 3px;
+    padding: 4px 14px;
+    margin-bottom: 24px;
+    font-family: 'JetBrains Mono', monospace;
+    text-transform: uppercase;
+  }
+  .hero h1 {
+    font-family: 'Playfair Display', serif;
+    font-size: clamp(2rem, 6vw, 4.2rem);
+    font-weight: 700;
+    line-height: 1.15;
+    margin-bottom: 16px;
+  }
+  .hero h1 em {
+    color: var(--accent);
+    font-style: italic;
+  }
+  .hero-sub {
+    font-size: 15px;
+    color: rgba(250,246,239,0.6);
+    max-width: 560px;
+    margin: 0 auto 40px;
+    font-weight: 300;
+  }
+  .hero-news {
+    display: inline-block;
+    background: rgba(255,255,255,0.06);
+    border-left: 3px solid var(--accent);
+    padding: 12px 20px;
+    text-align: left;
+    font-size: 13px;
+    max-width: 600px;
+    color: rgba(250,246,239,0.75);
+    font-style: italic;
+  }
+
+  /* NAV TABS */
+  .nav-wrap {
+    position: sticky;
+    top: 0;
+    z-index: 100;
+    background: var(--ink);
+    border-bottom: 2px solid var(--accent);
+    overflow-x: auto;
+  }
+  .nav-tabs {
+    display: flex;
+    white-space: nowrap;
+    padding: 0 20px;
+  }
+  .nav-tab {
+    padding: 14px 22px;
+    font-size: 12.5px;
+    font-family: 'JetBrains Mono', monospace;
+    color: rgba(250,246,239,0.5);
+    cursor: pointer;
+    border-bottom: 3px solid transparent;
+    transition: all 0.2s;
+    letter-spacing: 0.5px;
+    user-select: none;
+    border: none;
+    background: none;
+    flex-shrink: 0;
+  }
+  .nav-tab:hover { color: var(--paper); }
+  .nav-tab.active {
+    color: var(--accent);
+    border-bottom: 3px solid var(--accent);
+  }
+
+  /* MAIN CONTENT */
+  .main {
+    max-width: 860px;
+    margin: 0 auto;
+    padding: 0 24px;
+  }
+
+  .section {
+    display: none;
+    animation: fadeIn 0.4s ease;
+  }
+  .section.active { display: block; }
+
+  @keyframes fadeIn {
+    from { opacity: 0; transform: translateY(16px); }
+    to { opacity: 1; transform: translateY(0); }
+  }
+
+  /* INTRO STRIP */
+  .intro-strip {
+    background: var(--accent);
+    color: white;
+    padding: 14px 24px;
+    font-size: 13.5px;
+    margin: 0 -24px 40px;
+    display: flex;
+    align-items: center;
+    gap: 12px;
+  }
+  .intro-strip .icon { font-size: 20px; flex-shrink: 0; }
+
+  /* LEVEL BLOCK */
+  .level-block {
+    margin-bottom: 48px;
+  }
+  .level-header {
+    display: flex;
+    align-items: center;
+    gap: 14px;
+    margin-bottom: 24px;
+    padding-bottom: 12px;
+    border-bottom: 2px solid var(--border);
+  }
+  .level-dot {
+    width: 14px; height: 14px;
+    border-radius: 50%;
+    flex-shrink: 0;
+  }
+  .dot-easy { background: var(--easy); }
+  .dot-mid { background: var(--mid); }
+  .dot-hard { background: var(--hard); }
+  .dot-expert { background: var(--expert); }
+
+  .level-label {
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 11px;
+    letter-spacing: 2px;
+    padding: 3px 10px;
+    border-radius: 20px;
+    color: white;
+    font-weight: 600;
+  }
+  .label-easy { background: var(--easy); }
+  .label-mid { background: var(--mid); }
+  .label-hard { background: var(--hard); }
+  .label-expert { background: var(--expert); }
+
+  .level-title {
+    font-size: 18px;
+    font-weight: 700;
+    color: var(--ink);
+  }
+
+  /* CONCEPT CARD */
+  .concept {
+    background: white;
+    border: 1px solid var(--border);
+    border-radius: 2px;
+    margin-bottom: 20px;
+    overflow: hidden;
+    box-shadow: 2px 2px 0 var(--border);
+  }
+  .concept-head {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 16px 20px;
+    cursor: pointer;
+    user-select: none;
+    background: var(--paper2);
+    border-bottom: 1px solid var(--border);
+    transition: background 0.15s;
+  }
+  .concept-head:hover { background: #ede5d5; }
+  .concept-name {
+    font-size: 16px;
+    font-weight: 700;
+    display: flex;
+    align-items: center;
+    gap: 10px;
+  }
+  .concept-emoji { font-size: 18px; }
+  .concept-toggle {
+    font-size: 20px;
+    color: var(--muted);
+    transition: transform 0.25s;
+    flex-shrink: 0;
+  }
+  .concept.open .concept-toggle { transform: rotate(45deg); }
+
+  .concept-body {
+    display: none;
+    padding: 24px 24px 20px;
+  }
+  .concept.open .concept-body { display: block; }
+
+  .def {
+    font-size: 15px;
+    margin-bottom: 18px;
+    color: #3a2e20;
+  }
+
+  /* EXAMPLE BOX */
+  .example {
+    background: linear-gradient(135deg, #fff8f0, #fff3e5);
+    border: 1px solid #f0d9b5;
+    border-left: 4px solid var(--accent2);
+    padding: 16px 18px;
+    margin: 16px 0;
+    border-radius: 0 4px 4px 0;
+  }
+  .example-label {
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 10px;
+    letter-spacing: 2px;
+    color: var(--accent2);
+    font-weight: 600;
+    margin-bottom: 8px;
+  }
+  .example p { font-size: 14px; line-height: 1.8; color: #4a3520; }
+
+  /* KEY POINT */
+  .keypoint {
+    background: #fdf0ee;
+    border: 1px solid #f5c6c0;
+    border-radius: 4px;
+    padding: 14px 18px;
+    margin: 14px 0;
+    font-size: 14px;
+    display: flex;
+    gap: 10px;
+    align-items: flex-start;
+  }
+  .keypoint-icon { font-size: 16px; flex-shrink: 0; margin-top: 2px; }
+
+  /* FORMULA BOX */
+  .formula {
+    background: var(--ink);
+    color: #a8e6cf;
+    font-family: 'JetBrains Mono', monospace;
+    padding: 16px 20px;
+    border-radius: 4px;
+    font-size: 13px;
+    margin: 16px 0;
+    line-height: 1.7;
+  }
+  .formula span { color: var(--accent); }
+
+  /* NEWS LINK BOX */
+  .news-connect {
+    background: linear-gradient(135deg, #1a1008, #2c1810);
+    color: var(--paper);
+    border-radius: 4px;
+    padding: 16px 20px;
+    margin: 20px 0;
+    font-size: 13.5px;
+    line-height: 1.7;
+  }
+  .news-connect strong {
+    color: var(--accent);
+    font-size: 11px;
+    letter-spacing: 2px;
+    font-family: 'JetBrains Mono', monospace;
+    display: block;
+    margin-bottom: 8px;
+  }
+
+  /* MONSTER DIAGRAM */
+  .monster-diagram {
+    background: white;
+    border: 2px solid var(--accent);
+    border-radius: 4px;
+    padding: 28px 24px;
+    margin: 24px 0;
+    text-align: center;
+  }
+  .monster-diagram h3 {
+    font-size: 15px;
+    color: var(--accent);
+    margin-bottom: 20px;
+    font-family: 'JetBrains Mono', monospace;
+    letter-spacing: 1px;
+  }
+  .flow {
+    display: flex;
+    flex-direction: column;
+    gap: 0;
+    align-items: center;
+  }
+  .flow-box {
+    background: var(--paper2);
+    border: 1px solid var(--border);
+    padding: 10px 20px;
+    border-radius: 4px;
+    font-size: 13.5px;
+    font-weight: 600;
+    max-width: 320px;
+    width: 100%;
+  }
+  .flow-box.danger {
+    background: #fdf0ee;
+    border-color: var(--accent);
+    color: var(--accent);
+  }
+  .flow-arrow {
+    font-size: 22px;
+    color: var(--muted);
+    padding: 4px 0;
+    line-height: 1;
+  }
+
+  /* SECTION DIVIDER */
+  .section-divider {
+    text-align: center;
+    padding: 40px 0 32px;
+    position: relative;
+  }
+  .section-divider::before {
+    content: '';
+    position: absolute;
+    top: 56px; left: 0; right: 0;
+    height: 1px;
+    background: var(--border);
+  }
+  .section-divider-label {
+    display: inline-block;
+    background: var(--paper);
+    position: relative;
+    font-family: 'Playfair Display', serif;
+    font-size: 22px;
+    font-style: italic;
+    padding: 0 20px;
+    color: var(--muted);
+  }
+
+  /* JAPAN SECTION SPECIAL */
+  .japan-box {
+    background: linear-gradient(135deg, #fff5f5, #fff);
+    border: 1px solid #ffb3b3;
+    border-top: 4px solid #bc002d;
+    padding: 20px 22px;
+    margin: 16px 0;
+    border-radius: 0 0 4px 4px;
+  }
+  .japan-box .japan-flag {
+    font-size: 13px;
+    color: #bc002d;
+    font-family: 'JetBrains Mono', monospace;
+    letter-spacing: 2px;
+    font-weight: 700;
+    margin-bottom: 10px;
+  }
+
+  /* TIMELINE */
+  .timeline {
+    position: relative;
+    padding-left: 28px;
+    margin: 20px 0;
+  }
+  .timeline::before {
+    content: '';
+    position: absolute;
+    left: 8px; top: 0; bottom: 0;
+    width: 2px;
+    background: var(--border);
+  }
+  .timeline-item {
+    position: relative;
+    margin-bottom: 18px;
+    font-size: 14px;
+  }
+  .timeline-item::before {
+    content: '';
+    position: absolute;
+    left: -24px; top: 7px;
+    width: 10px; height: 10px;
+    border-radius: 50%;
+    background: var(--accent);
+    border: 2px solid white;
+    outline: 1px solid var(--accent);
+  }
+  .timeline-year {
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 11px;
+    font-weight: 700;
+    color: var(--accent);
+    margin-bottom: 3px;
+  }
+
+  /* GLOSSARY PILL */
+  .pill {
+    display: inline-block;
+    background: var(--paper2);
+    border: 1px solid var(--border);
+    padding: 2px 10px;
+    border-radius: 20px;
+    font-size: 12px;
+    font-family: 'JetBrains Mono', monospace;
+    margin: 2px;
+    color: var(--muted);
+  }
+
+  /* FOOTER */
+  .footer {
+    background: var(--ink);
+    color: rgba(250,246,239,0.4);
+    text-align: center;
+    padding: 40px 24px;
+    font-size: 12px;
+    margin-top: 60px;
+  }
+  .footer strong { color: var(--accent); }
+
+  /* PROGRESS BAR */
+  .progress-wrap {
+    display: flex;
+    gap: 4px;
+    margin-bottom: 6px;
+  }
+  .progress-seg {
+    height: 4px;
+    border-radius: 2px;
+    flex: 1;
+  }
+  .seg-fill { background: var(--accent); }
+  .seg-empty { background: var(--border); }
+
+  /* TABLE */
+  table {
+    width: 100%;
+    border-collapse: collapse;
+    font-size: 13.5px;
+    margin: 16px 0;
+  }
+  th {
+    background: var(--ink);
+    color: var(--paper);
+    padding: 10px 14px;
+    text-align: left;
+    font-size: 12px;
+    letter-spacing: 0.5px;
+  }
+  td {
+    padding: 10px 14px;
+    border-bottom: 1px solid var(--border);
+    vertical-align: top;
+  }
+  tr:nth-child(even) td { background: var(--paper2); }
+
+  /* Abbreviation term annotation */
+  .abbr-term {
+    font-family: 'JetBrains Mono', monospace;
+    font-weight: 600;
+    font-size: 0.95em;
+    color: var(--accent3);
+    position: relative;
+    cursor: default;
+    border-bottom: 1px dashed #8ba0b8;
+  }
+  .abbr-term .en {
+    font-family: 'Noto Serif TC', serif;
+    font-size: 0.75em;
+    color: var(--muted);
+    font-weight: 400;
+    letter-spacing: 0.2px;
+    margin-left: 1px;
+  }
+
+  /* English term annotation */
+  .en {
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 0.78em;
+    color: var(--muted);
+    font-weight: 400;
+    letter-spacing: 0.3px;
+    margin-left: 3px;
+    white-space: nowrap;
+  }
+  /* Inline term highlight */
+  .term {
+    border-bottom: 1px dashed var(--border);
+    cursor: default;
+  }
+
+  @media (max-width: 600px) {
+    .hero { padding: 50px 20px 40px; }
+    .flow-box { font-size: 12px; }
+    th, td { padding: 8px 10px; font-size: 12.5px; }
+  }
+</style>
+</head>
+<body>
+
+<!-- HERO -->
+<div class="hero">
+  <div class="hero-badge">2026.06.05 ｜ 投資小白完全圖解</div>
+  <h1>債市的<em><span class="term">凸性怪獸<span class="en">（Convexity Monster）</span></span></em><br>正在甦醒</h1>
+  <p class="hero-sub">美債<span class="term">殖利率<span class="en">（Yield）</span></span>、日本借錢新時代、<span class="abbr-term">MBS<span class="en">（Mortgage-Backed Securities，不動產抵押貸款證券）</span></span> <span class="term">凸性避險<span class="en">（Convexity Hedging）</span></span></span>——一次看懂讓華爾街緊張的連環炸彈</p>
+  <div class="hero-news">
+    「華爾街警告：曾在過去多次放大債市波動的『<span class="term">凸性避險<span class="en">（Convexity Hedging）</span></span></span>』機制正在復活，背後的推手是規模高達數兆美元的 <span class="abbr-term">MBS<span class="en">（Mortgage-Backed Securities，不動產抵押貸款證券）</span></span> 市場。」—— 鉅亨網 2026.06.05
+  </div>
+</div>
+
+<!-- STICKY NAV -->
+<div class="nav-wrap">
+  <div class="nav-tabs">
+    <button class="nav-tab active" onclick="showSection('s0', this)">📍 怎麼用</button>
+    <button class="nav-tab" onclick="showSection('s1', this)">🟢 基礎必懂</button>
+    <button class="nav-tab" onclick="showSection('s2', this)">🟡 中等進階</button>
+    <button class="nav-tab" onclick="showSection('s3', this)">🔴 投資人必懂</button>
+    <button class="nav-tab" onclick="showSection('s4', this)">🟣 領域深潛</button>
+    <button class="nav-tab" onclick="showSection('s5', this)">🗾 日本篇</button>
+    <button class="nav-tab" onclick="showSection('s6', this)">🏯 日本央行</button>
+    <button class="nav-tab" onclick="showSection('s7', this)">🏛️ 聯準會</button>
+  </div>
+</div>
+
+<div class="main">
+
+<!-- ===== HOW TO USE ===== -->
+<div id="s0" class="section active">
+  <div class="intro-strip">
+    <span class="icon">📖</span>
+    <span>這份圖解分成四大層級，依你的投資經驗選擇入口，每個概念都有<strong>生活化舉例</strong>，新手從基礎讀起，老手可直接跳進階。</span>
+  </div>
+
+  <table>
+    <tr>
+      <th>層級</th><th>適合誰</th><th>你能學到</th>
+    </tr>
+    <tr>
+      <td><span class="label-easy level-label">🟢 基礎</span></td>
+      <td>完全沒碰過債市</td>
+      <td><span class="term">殖利率<span class="en">（Yield）</span></span>是什麼、美債怎麼影響股市</td>
+    </tr>
+    <tr>
+      <td><span class="label-mid level-label">🟡 中等</span></td>
+      <td>有基本投資概念</td>
+      <td>Fed 升降息、通膨、<span class="abbr-term">MBS<span class="en">（Mortgage-Backed Securities，不動產抵押貸款證券）</span></span> 是什麼</td>
+    </tr>
+    <tr>
+      <td><span class="label-hard level-label">🔴 進階</span></td>
+      <td>已在投資台股/<span class="abbr-term">ETF<span class="en">（Exchange-Traded Fund，指數股票型基金）</span></span></td>
+      <td><span class="term">凸性避險<span class="en">（Convexity Hedging）</span></span></span>怎麼讓市場崩壞、日本利率效應</td>
+    </tr>
+    <tr>
+      <td><span class="label-expert level-label">🟣 深潛</span></td>
+      <td>想走金融/財管的學生</td>
+      <td><span class="term">存續期間<span class="en">（Duration）</span></span>、利率衍生品、套利機制</td>
+    </tr>
+  </table>
+
+  <div class="keypoint">
+    <span class="keypoint-icon">💡</span>
+    <span>點開各層級的<strong>每個概念卡片</strong>，可以展開詳細說明和例子。右上角的「＋」點一下展開，再點收起。</span>
+  </div>
+
+  <div class="news-connect">
+    <strong>📰 新聞在說什麼？</strong>
+    今天那篇鉅亨文章的核心是：美國有一個叫「<span class="abbr-term">MBS<span class="en">（Mortgage-Backed Securities，不動產抵押貸款證券）</span></span>」的市場（房貸債券），以前由聯準會撐著，現在聯準會退出了。這個市場的投資人，在<span class="term">殖利率<span class="en">（Yield）</span></span>上升時，會被迫去「賣更多美債」來避險——結果把美債<span class="term">殖利率<span class="en">（Yield）</span></span>推更高，變成一個惡性循環。這頭「<span class="term">凸性怪獸<span class="en">（Convexity Monster）</span></span>」是由三件事湊在一起造成的：① <span class="term">殖利率<span class="en">（Yield）</span></span>上升中、② <span class="abbr-term">MBS<span class="en">（Mortgage-Backed Securities，不動產抵押貸款證券）</span></span> 市場規模暴增、③ 聯準會不再當救世主。讀完這份圖解，你就會懂為什麼華爾街要緊張。
+  </div>
+</div>
+
+<!-- ===== 基礎 ===== -->
+<div id="s1" class="section">
+  <div class="intro-strip">
+    <span class="icon">🟢</span>
+    <span>基礎三層｜完全新手也看得懂，從「債券是什麼」開始</span>
+  </div>
+
+  <!-- EASY 1 -->
+  <div class="level-block">
+    <div class="level-header">
+      <div class="level-dot dot-easy"></div>
+      <span class="level-label label-easy">簡單</span>
+      <span class="level-title">債券是什麼？<span class="term">殖利率<span class="en">（Yield）</span></span>又是啥？</span>
+    </div>
+
+    <div class="concept" onclick="toggleConcept(this)">
+      <div class="concept-head">
+        <div class="concept-name"><span class="concept-emoji">📜</span>債券 ＝ 政府向你借錢的借據</div>
+        <span class="concept-toggle">+</span>
+      </div>
+      <div class="concept-body">
+        <p class="def">你把錢借給美國政府，政府給你一張「借據」，承諾定期付利息，到期還本金。這張借據就叫「<span class="term">美國公債<span class="en">（US Treasury）</span></span></span>（美債）」。</p>
+        <div class="example">
+          <div class="example-label">🏠 生活舉例</div>
+          <p>你把 100 萬存給朋友開餐廳，朋友每年給你 4 萬當利息，10 年後還你 100 萬。這就像買了一張「10 年期美債」，4% 就是利率。</p>
+        </div>
+        <div class="keypoint">
+          <span class="keypoint-icon">⭐</span>
+          <span>美債最常見的有 2 年期、10 年期、30 年期，「10 年期美債<span class="term">殖利率<span class="en">（Yield）</span></span>」是全球最重要的金融指標之一。</span>
+        </div>
+      </div>
+    </div>
+
+    <div class="concept" onclick="toggleConcept(this)">
+      <div class="concept-head">
+        <div class="concept-name"><span class="concept-emoji">📈</span><span class="term">殖利率<span class="en">（Yield）</span></span>（Yield）＝ 你實際賺多少 %</div>
+        <span class="concept-toggle">+</span>
+      </div>
+      <div class="concept-body">
+        <p class="def"><span class="term">殖利率<span class="en">（Yield）</span></span>不完全等於利率。債券可以在市場上買賣，當市場需求改變，「你花多少錢買到這張債」就會影響你的實際報酬率。</p>
+        <div class="example">
+          <div class="example-label">🎟️ 生活舉例</div>
+          <p>那張「10 年還 100 萬、每年付 4 萬」的借據，如果你花 80 萬買到（因為大家不看好那個朋友），你的實際報酬率就不是 4%，而是更高——這就是<span class="term">殖利率<span class="en">（Yield）</span></span>。</p>
+        </div>
+        <div class="formula">
+          <span>黃金公式：</span><br>
+          債券價格 ↑  →  <span class="term">殖利率<span class="en">（Yield）</span></span> ↓<br>
+          債券價格 ↓  →  <span class="term">殖利率<span class="en">（Yield）</span></span> ↑<br>
+          <span>（兩者永遠反向！）</span>
+        </div>
+        <div class="keypoint">
+          <span class="keypoint-icon">💥</span>
+          <span>新聞說「美債<span class="term">殖利率<span class="en">（Yield）</span></span>逼近 19 年高點」= 美債價格大跌、大家不買美債、美國借錢的成本大漲。</span>
+        </div>
+      </div>
+    </div>
+
+    <div class="concept" onclick="toggleConcept(this)">
+      <div class="concept-head">
+        <div class="concept-name"><span class="concept-emoji">🌍</span>為什麼美債<span class="term">殖利率<span class="en">（Yield）</span></span>這麼重要？</div>
+        <span class="concept-toggle">+</span>
+      </div>
+      <div class="concept-body">
+        <p class="def">美債<span class="term">殖利率<span class="en">（Yield）</span></span>是全球金融的「定價之錨」。幾乎所有東西的利率都會參考它——企業借款、房貸、信用卡，甚至台股的股票估值。</p>
+        <div class="example">
+          <div class="example-label">⚓ 生活舉例</div>
+          <p>美債<span class="term">殖利率<span class="en">（Yield）</span></span>就像「全球最安全的存款利率」。如果這個利率從 1% 漲到 5%，大家會想「那我直接買美債就好，幹嘛冒風險買股票？」—— 結果資金從股市撤出，股市下跌。</p>
+        </div>
+        <div class="keypoint">
+          <span class="keypoint-icon">🇹🇼</span>
+          <span>台股外資的進出，有很大一部分就是看美債<span class="term">殖利率<span class="en">（Yield）</span></span>高不高。<span class="term">殖利率<span class="en">（Yield）</span></span>高 → 外資回美國 → 台股下跌。</span>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- EASY 2 -->
+  <div class="level-block">
+    <div class="level-header">
+      <div class="level-dot dot-easy"></div>
+      <span class="level-label label-easy">簡單</span>
+      <span class="level-title">誰在決定<span class="term">殖利率<span class="en">（Yield）</span></span>？</span>
+    </div>
+
+    <div class="concept" onclick="toggleConcept(this)">
+      <div class="concept-head">
+        <div class="concept-name"><span class="concept-emoji">🏛️</span>聯準會（Fed）是誰？在幹嘛？</div>
+        <span class="concept-toggle">+</span>
+      </div>
+      <div class="concept-body">
+        <p class="def">Fed（Federal Reserve）是美國的中央銀行，相當於美國的台灣銀行（央行）。它最大的武器是「升息」或「降息」——調整基準利率。</p>
+        <div class="example">
+          <div class="example-label">💊 生活舉例</div>
+          <p>把美國經濟想成一個人，Fed 是他的醫生：<br>
+          ・通膨太高（物價飆漲）→ 升息：讓借錢變貴、冷卻消費<br>
+          ・經濟太冷、失業率高 → 降息：讓借錢變便宜、刺激消費</p>
+        </div>
+        <div class="keypoint">
+          <span class="keypoint-icon">📡</span>
+          <span>Fed 直接控制的是「短期利率」，長期美債<span class="term">殖利率<span class="en">（Yield）</span></span>（如 10 年期）則更受市場預期影響，Fed 不能直接指定它。</span>
+        </div>
+      </div>
+    </div>
+
+    <div class="concept" onclick="toggleConcept(this)">
+      <div class="concept-head">
+        <div class="concept-name"><span class="concept-emoji">🎯</span>供給與需求：市場也在決定<span class="term">殖利率<span class="en">（Yield）</span></span></div>
+        <span class="concept-toggle">+</span>
+      </div>
+      <div class="concept-body">
+        <p class="def">美債的價格也受供需影響。買的人多 → 價格漲、<span class="term">殖利率<span class="en">（Yield）</span></span>跌；賣的人多 → 價格跌、<span class="term">殖利率<span class="en">（Yield）</span></span>漲。</p>
+        <div class="example">
+          <div class="example-label">🍱 生活舉例</div>
+          <p>就像夜市的炸雞排：今天大排長龍（需求大），老闆就敢漲價（債券價格漲）。今天沒人買（需求少），老闆降價（債券價格跌、<span class="term">殖利率<span class="en">（Yield）</span></span>漲）。</p>
+        </div>
+        <table>
+          <tr><th>誰在買美債</th><th>誰在賣</th></tr>
+          <tr><td>各國央行（日本、中國）<br>保險公司、退休基金<br>避險基金</td><td>美國財政部（發新債）<br>Fed（<span class="term">縮表<span class="en">（Balance Sheet Reduction）</span></span>時賣）<br>需要現金的機構</td></tr>
+        </table>
+      </div>
+    </div>
+  </div>
+
+  <!-- EASY 3 -->
+  <div class="level-block">
+    <div class="level-header">
+      <div class="level-dot dot-easy"></div>
+      <span class="level-label label-easy">簡單</span>
+      <span class="level-title">通膨是什麼？為何讓債券投資人怕怕的？</span>
+    </div>
+
+    <div class="concept" onclick="toggleConcept(this)">
+      <div class="concept-head">
+        <div class="concept-name"><span class="concept-emoji">🔥</span>通膨（Inflation）超簡單版</div>
+        <span class="concept-toggle">+</span>
+      </div>
+      <div class="concept-body">
+        <p class="def">通膨 = 整體物價持續上漲，你的錢越來越不值錢。</p>
+        <div class="example">
+          <div class="example-label">🧋 生活舉例</div>
+          <p>10 年前 25 元能買一杯珍奶，現在要 65 元。如果你 10 年前買了一張「每年給你 3 萬、到期還 100 萬」的債券，到期後拿到的 100 萬能買的東西，比 10 年前少了很多——這就是通膨吃掉你的報酬。</p>
+        </div>
+        <div class="keypoint">
+          <span class="keypoint-icon">😰</span>
+          <span>債券投資人最怕通膨，因為通膨讓固定利息的「實質購買力」縮水。所以<span class="term">通膨預期<span class="en">（Inflation Expectations）</span></span>升高 → <span class="term">殖利率<span class="en">（Yield）</span></span>上升（投資人要求更高補償）。</span>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- ===== 中等 ===== -->
+<div id="s2" class="section">
+  <div class="intro-strip">
+    <span class="icon">🟡</span>
+    <span>中等三層｜你已知道股票和基本投資，現在搞懂 <span class="abbr-term">MBS<span class="en">（Mortgage-Backed Securities，不動產抵押貸款證券）</span></span>、<span class="term">量化寬鬆<span class="en">（Quantitative Easing，縮寫 QE）</span></span>、<span class="term">縮表<span class="en">（Balance Sheet Reduction）</span></span></span>
+  </div>
+
+  <!-- MID 1 -->
+  <div class="level-block">
+    <div class="level-header">
+      <div class="level-dot dot-mid"></div>
+      <span class="level-label label-mid">中等</span>
+      <span class="level-title"><span class="abbr-term">MBS<span class="en">（Mortgage-Backed Securities，不動產抵押貸款證券）</span></span> 是什麼？為何搞死了債市？</span>
+    </div>
+
+    <div class="concept" onclick="toggleConcept(this)">
+      <div class="concept-head">
+        <div class="concept-name"><span class="concept-emoji">🏠</span>MBS（<span class="term">不動產抵押貸款證券<span class="en">（Mortgage-Backed Securities，縮寫 MBS）</span></span>）：銀行把房貸打包賣掉</div>
+        <span class="concept-toggle">+</span>
+      </div>
+      <div class="concept-body">
+        <p class="def">MBS（Mortgage-Backed Securities）= 把幾千筆房屋貸款打包在一起，做成一張可以買賣的「債券」。</p>
+        <div class="example">
+          <div class="example-label">🎁 生活舉例</div>
+          <p>銀行放了 1000 筆房貸，每個月都在收利息。銀行嫌管理麻煩，就把這 1000 筆貸款「打包」成一個商品賣給投資人——你買了就等於每個月收這 1000 戶人家的房貸利息。這個打包產品就是 <span class="abbr-term">MBS<span class="en">（Mortgage-Backed Securities，不動產抵押貸款證券）</span></span>。</p>
+        </div>
+        <div class="keypoint">
+          <span class="keypoint-icon">🔑</span>
+          <span><span class="abbr-term">MBS<span class="en">（Mortgage-Backed Securities，不動產抵押貸款證券）</span></span> 的特別之處：屋主可以<span class="term">提前還款<span class="en">（Prepayment）</span></span>（換房、<span class="term">再融資<span class="en">（Refinancing）</span></span>）。這讓 <span class="abbr-term">MBS<span class="en">（Mortgage-Backed Securities，不動產抵押貸款證券）</span></span> 的「還款時間」非常不確定，不像一般債券那樣固定。</span>
+        </div>
+        <div class="news-connect">
+          <strong>📰 新聞連結</strong>
+          文章說「5% 以上<span class="term">票面利率<span class="en">（Coupon Rate）</span></span>的 <span class="abbr-term">MBS<span class="en">（Mortgage-Backed Securities，不動產抵押貸款證券）</span></span> 超過 2 兆美元，是三年前的四倍」——這是因為 2022-2023 年升息後，大量新房貸用高利率打包成新 <span class="abbr-term">MBS<span class="en">（Mortgage-Backed Securities，不動產抵押貸款證券）</span></span>，這批 <span class="abbr-term">MBS<span class="en">（Mortgage-Backed Securities，不動產抵押貸款證券）</span></span> 現在對<span class="term">殖利率<span class="en">（Yield）</span></span>波動超級敏感。
+        </div>
+      </div>
+    </div>
+
+    <div class="concept" onclick="toggleConcept(this)">
+      <div class="concept-head">
+        <div class="concept-name"><span class="concept-emoji">🔄</span><span class="term">提前還款<span class="en">（Prepayment）</span></span>風險：<span class="abbr-term">MBS<span class="en">（Mortgage-Backed Securities，不動產抵押貸款證券）</span></span> 的天敵</div>
+        <span class="concept-toggle">+</span>
+      </div>
+      <div class="concept-body">
+        <p class="def"><span class="abbr-term">MBS<span class="en">（Mortgage-Backed Securities，不動產抵押貸款證券）</span></span> 投資人面對一個尷尬問題：利率下降時，屋主趕快去<span class="term">再融資<span class="en">（Refinancing）</span></span>（換低利房貸），你手上的 <span class="abbr-term">MBS<span class="en">（Mortgage-Backed Securities，不動產抵押貸款證券）</span></span> 提早被還回來；利率上升時，沒人<span class="term">再融資<span class="en">（Refinancing）</span></span>，你的錢反而被鎖在高利率時代。</p>
+        <div class="example">
+          <div class="example-label">😅 生活舉例</div>
+          <p>你把錢存定期，銀行說「隨時可以提前解約，但不用罰款」。結果每次你快賺到最多錢（利率高），屋主們就來<span class="term">提前還款<span class="en">（Prepayment）</span></span>，搞得你都在最差的時機被迫重新找投資。</p>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- MID 2 -->
+  <div class="level-block">
+    <div class="level-header">
+      <div class="level-dot dot-mid"></div>
+      <span class="level-label label-mid">中等</span>
+      <span class="level-title"><span class="term">量化寬鬆<span class="en">（Quantitative Easing，縮寫 QE）</span></span>（<span class="abbr-term">QE<span class="en">（Quantitative Easing，量化寬鬆）</span></span>）和<span class="term">縮表<span class="en">（Balance Sheet Reduction）</span></span>是什麼？</span>
+    </div>
+
+    <div class="concept" onclick="toggleConcept(this)">
+      <div class="concept-head">
+        <div class="concept-name"><span class="concept-emoji">🖨️</span><span class="term">量化寬鬆<span class="en">（Quantitative Easing，縮寫 QE）</span></span>（<span class="abbr-term">QE<span class="en">（Quantitative Easing，量化寬鬆）</span></span>）：Fed 大量印鈔買債</div>
+        <span class="concept-toggle">+</span>
+      </div>
+      <div class="concept-body">
+        <p class="def">QE（Quantitative Easing）= Fed 直接出手買大量美債或 <span class="abbr-term">MBS<span class="en">（Mortgage-Backed Securities，不動產抵押貸款證券）</span></span>，把資金注入市場。</p>
+        <div class="example">
+          <div class="example-label">💧 生活舉例</div>
+          <p>市場就像一條河，金錢是水。<span class="abbr-term">QE<span class="en">（Quantitative Easing，量化寬鬆）</span></span> 就是 Fed 打開大閘門放水——水多了，利率自然降（錢多、借錢的人少），股市和債市都漲。</p>
+        </div>
+        <div class="timeline">
+          <div class="timeline-item">
+            <div class="timeline-year">2020-2021</div>
+            疫情期間，Fed 每個月買 1200 億美元的美債+<span class="abbr-term">MBS<span class="en">（Mortgage-Backed Securities，不動產抵押貸款證券）</span></span>，創史上最大 <span class="abbr-term">QE<span class="en">（Quantitative Easing，量化寬鬆）</span></span>
+          </div>
+          <div class="timeline-item">
+            <div class="timeline-year">2022-2023</div>
+            通膨狂飆，Fed 開始「<span class="term">縮表<span class="en">（Balance Sheet Reduction）</span></span>（<span class="abbr-term">QT<span class="en">（Quantitative Tightening，量化緊縮）</span></span>）」：停買、甚至讓手上的債到期不續買
+          </div>
+          <div class="timeline-item">
+            <div class="timeline-year">2026 現在</div>
+            Fed 手上 <span class="abbr-term">MBS<span class="en">（Mortgage-Backed Securities，不動產抵押貸款證券）</span></span> 大減，穩定市場的力量消失，「<span class="term">凸性怪獸<span class="en">（Convexity Monster）</span></span>」趁虛而入
+          </div>
+        </div>
+        <div class="news-connect">
+          <strong>📰 新聞連結</strong>
+          「新冠疫情期間，Fed 累積超過 2.7 兆美元 <span class="abbr-term">MBS<span class="en">（Mortgage-Backed Securities，不動產抵押貸款證券）</span></span> 持倉，成為市場最大的穩定力量。但隨著<span class="term">縮表<span class="en">（Balance Sheet Reduction）</span></span>，Fed 已大幅減持，填補空缺的是避險基金——而他們會積極避險，讓市場更不穩定。」
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- MID 3 -->
+  <div class="level-block">
+    <div class="level-header">
+      <div class="level-dot dot-mid"></div>
+      <span class="level-label label-mid">中等</span>
+      <span class="level-title"><span class="term">殖利率曲線<span class="en">（Yield Curve）</span></span>：短債 vs 長債</span>
+    </div>
+
+    <div class="concept" onclick="toggleConcept(this)">
+      <div class="concept-head">
+        <div class="concept-name"><span class="concept-emoji">📊</span>為什麼 10 年比 2 年更重要？</div>
+        <span class="concept-toggle">+</span>
+      </div>
+      <div class="concept-body">
+        <p class="def">短期債（如 2 年）主要受 Fed 升降息影響；長期債（10 年、30 年）更多是市場對「通膨+成長+財政風險」的預期。</p>
+        <div class="example">
+          <div class="example-label">🏃 生活舉例</div>
+          <p>2 年期 = 你跟朋友借錢兩年，他主要看你現在的信用和薪水（Fed 利率）<br>10 年期 = 你要借十年房貸，銀行不只看你現在，還要猜十年後通膨多高、台灣經濟如何</p>
+        </div>
+        <table>
+          <tr><th>到期</th><th>主要影響因素</th><th>代表意義</th></tr>
+          <tr><td>2 年期</td><td>Fed 利率決策</td><td>短期經濟冷熱</td></tr>
+          <tr><td>10 年期</td><td><span class="term">通膨預期<span class="en">（Inflation Expectations）</span></span> + 成長預期</td><td>全球最重要定價指標</td></tr>
+          <tr><td>30 年期</td><td><span class="term">財政赤字<span class="en">（Fiscal Deficit）</span></span> + 長期通膨</td><td>「長天期美債」<span class="term">凸性<span class="en">（Convexity）</span></span>最高</td></tr>
+        </table>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- ===== 進階 ===== -->
+<div id="s3" class="section">
+  <div class="intro-strip">
+    <span class="icon">🔴</span>
+    <span>投資人必懂三層｜搞懂「<span class="term">凸性怪獸<span class="en">（Convexity Monster）</span></span>」的連環機制，為你的投資組合做準備</span>
+  </div>
+
+  <!-- HARD 1 -->
+  <div class="level-block">
+    <div class="level-header">
+      <div class="level-dot dot-hard"></div>
+      <span class="level-label label-hard">進階</span>
+      <span class="level-title"><span class="term">凸性<span class="en">（Convexity）</span></span>（Convexity）是什麼妖術？</span>
+    </div>
+
+    <div class="concept" onclick="toggleConcept(this)">
+      <div class="concept-head">
+        <div class="concept-name"><span class="concept-emoji">🔮</span><span class="term">凸性<span class="en">（Convexity）</span></span>：<span class="term">殖利率<span class="en">（Yield）</span></span>變動時，債券的「加速反應」</div>
+        <span class="concept-toggle">+</span>
+      </div>
+      <div class="concept-body">
+        <p class="def"><span class="term">凸性<span class="en">（Convexity）</span></span>（Convexity）描述的是：債券價格對<span class="term">殖利率<span class="en">（Yield）</span></span>的敏感度，本身也會隨著<span class="term">殖利率<span class="en">（Yield）</span></span>而改變。也就是「敏感度的敏感度」。</p>
+        <div class="example">
+          <div class="example-label">🚗 生活舉例</div>
+          <p>你開車加速（<span class="term">殖利率<span class="en">（Yield）</span></span>變動），一般債券的速度是固定增加（線性）；但 <span class="abbr-term">MBS<span class="en">（Mortgage-Backed Securities，不動產抵押貸款證券）</span></span> 的速度是「越開越快或越開越慢」（非線性）——這種「油門效果會改變」就是<span class="term">凸性<span class="en">（Convexity）</span></span>的概念。</p>
+        </div>
+        <div class="monster-diagram">
+          <h3>⚠️ <span class="term">凸性怪獸<span class="en">（Convexity Monster）</span></span>的惡性循環</h3>
+          <div class="flow">
+            <div class="flow-box"><span class="term">殖利率<span class="en">（Yield）</span></span>上升（美債被拋售）</div>
+            <div class="flow-arrow">↓</div>
+            <div class="flow-box"><span class="abbr-term">MBS<span class="en">（Mortgage-Backed Securities，不動產抵押貸款證券）</span></span> 的「<span class="term">存續期間<span class="en">（Duration）</span></span>」被動拉長（屋主不想換低利房貸）</div>
+            <div class="flow-arrow">↓</div>
+            <div class="flow-box"><span class="abbr-term">MBS<span class="en">（Mortgage-Backed Securities，不動產抵押貸款證券）</span></span> 對利率更敏感 → 投資人必須賣更多美債來避險</div>
+            <div class="flow-arrow">↓</div>
+            <div class="flow-box danger">美債遭到更多賣壓 → <span class="term">殖利率<span class="en">（Yield）</span></span>再度上升 🔄</div>
+            <div class="flow-arrow">↓</div>
+            <div class="flow-box danger">惡性循環放大！怪獸甦醒！</div>
+          </div>
+        </div>
+        <div class="keypoint">
+          <span class="keypoint-icon">💥</span>
+          <span>這就是為什麼新聞說這個機制「本身具有順周期特性，往往放大市場原有走勢」——漲的時候助漲，跌的時候助跌。</span>
+        </div>
+      </div>
+    </div>
+
+    <div class="concept" onclick="toggleConcept(this)">
+      <div class="concept-head">
+        <div class="concept-name"><span class="concept-emoji">🛡️</span><span class="term">凸性避險<span class="en">（Convexity Hedging）</span></span></span>（Convexity Hedging）：被迫的自保行為</div>
+        <span class="concept-toggle">+</span>
+      </div>
+      <div class="concept-body">
+        <p class="def"><span class="abbr-term">MBS<span class="en">（Mortgage-Backed Securities，不動產抵押貸款證券）</span></span> 投資人為了對抗上述風險，會去「賣出美債期貨」或「做空美債衍生品」來抵銷損失。這個自保動作本身，就是在加劇市場賣壓。</p>
+        <div class="example">
+          <div class="example-label">🔥 消防舉例</div>
+          <p>你的房子（<span class="abbr-term">MBS<span class="en">（Mortgage-Backed Securities，不動產抵押貸款證券）</span></span>）著火了，為了滅火，你去附近的消防栓（美債市場）抽水。但你一抽水，附近所有鄰居的水壓都降低（<span class="term">殖利率<span class="en">（Yield）</span></span>上升），他們也更難救自己的房子。</p>
+        </div>
+        <div class="news-connect">
+          <strong>📰 新聞連結</strong>
+          「高盛估計，上個月債市大跌後，<span class="abbr-term">MBS<span class="en">（Mortgage-Backed Securities，不動產抵押貸款證券）</span></span> 投資人需要額外建立相當於約 400 億美元 10 年期美債的避險部位」—— 這個量已大到可以動搖整個市場。
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- HARD 2 -->
+  <div class="level-block">
+    <div class="level-header">
+      <div class="level-dot dot-hard"></div>
+      <span class="level-label label-hard">進階</span>
+      <span class="level-title">MOVE Index：債市的恐慌指數</span>
+    </div>
+
+    <div class="concept" onclick="toggleConcept(this)">
+      <div class="concept-head">
+        <div class="concept-name"><span class="concept-emoji">📡</span>MOVE Index vs 股市的 <span class="abbr-term">VIX<span class="en">（Volatility Index，股市恐慌指數）</span></span></div>
+        <span class="concept-toggle">+</span>
+      </div>
+      <div class="concept-body">
+        <p class="def"><span class="abbr-term">VIX<span class="en">（Volatility Index，股市恐慌指數）</span></span> 是股市的「恐慌指數」，MOVE Index 是債市版。兩者都衡量市場對未來波動的預期。</p>
+        <table>
+          <tr><th></th><th>VIX（股市）</th><th>MOVE（債市）</th></tr>
+          <tr><td>衡量什麼</td><td>標普 500 的波動預期</td><td><span class="term">美國公債<span class="en">（US Treasury）</span></span></span>的波動預期</td></tr>
+          <tr><td>高點代表</td><td>股市恐慌</td><td>債市恐慌、<span class="term">殖利率<span class="en">（Yield）</span></span>大震盪</td></tr>
+          <tr><td>與台股關係</td><td><span class="abbr-term">VIX<span class="en">（Volatility Index，股市恐慌指數）</span></span> 飆升外資跑</td><td>MOVE 高→美債不穩→外資也跑</td></tr>
+        </table>
+        <div class="keypoint">
+          <span class="keypoint-icon">🇹🇼</span>
+          <span>台股投資人可以把 <span class="term">MOVE 指數<span class="en">（MOVE Index）</span></span>當「美債版警報器」：MOVE 飆高，通常代表外資即將縮手，台股跟著震盪。</span>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- HARD 3 -->
+  <div class="level-block">
+    <div class="level-header">
+      <div class="level-dot dot-hard"></div>
+      <span class="level-label label-hard">進階</span>
+      <span class="level-title">實際影響你的投資組合</span>
+    </div>
+
+    <div class="concept" onclick="toggleConcept(this)">
+      <div class="concept-head">
+        <div class="concept-name"><span class="concept-emoji">🎯</span><span class="term">凸性怪獸<span class="en">（Convexity Monster）</span></span>甦醒，台股&<span class="abbr-term">ETF<span class="en">（Exchange-Traded Fund，指數股票型基金）</span></span> 投資人怎麼辦？</div>
+        <span class="concept-toggle">+</span>
+      </div>
+      <div class="concept-body">
+        <p class="def"><span class="term">殖利率<span class="en">（Yield）</span></span>上升壓力持續，對不同資產的影響不同。</p>
+        <table>
+          <tr><th>資產類型</th><th>影響方向</th><th>原因</th></tr>
+          <tr><td>長天期美債 ETF（如 TLT）</td><td>🔴 下跌壓力</td><td>存續期最長，價格最敏感</td></tr>
+          <tr><td>科技股 / 成長股</td><td>🔴 估值壓縮</td><td>未來現金流折現，<span class="term">殖利率<span class="en">（Yield）</span></span>高折現率高</td></tr>
+          <tr><td>台積電（<span class="abbr-term">TSMC<span class="en">（Taiwan Semiconductor Manufacturing Company，台灣積體電路製造）</span></span>）</td><td>🟡 間接壓力</td><td>外資評估台股的「機會成本」提高</td></tr>
+          <tr><td>金融股 / 銀行股</td><td>🟢 部分受惠</td><td>利差擴大，但貸款違約風險上升</td></tr>
+          <tr><td>美元現金 / 短期債</td><td>🟢 相對避風港</td><td><span class="term">殖利率<span class="en">（Yield）</span></span>高，錢停在短債也不虧</td></tr>
+        </table>
+        <div class="example">
+          <div class="example-label">💡 台股投資人的策略思考</div>
+          <p>如果<span class="term">凸性怪獸<span class="en">（Convexity Monster）</span></span>真的完全甦醒、美債<span class="term">殖利率<span class="en">（Yield）</span></span>再衝高，可能的應對包括：降低高本益比成長股比重、注意外資月度流向、觀察 10 年期美債是否突破 4.7% 關鍵位置（文章有提到技術位）。</p>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- ===== 美債歷史故事 ===== -->
+  <div class="section-divider">
+    <span class="section-divider-label">📖 美債的誕生與危機史</span>
+  </div>
+
+  <div class="level-block">
+    <div class="level-header">
+      <div class="level-dot dot-hard"></div>
+      <span class="level-label label-hard">進階</span>
+      <span class="level-title">從獨立戰爭的欠條，到全球最重要的金融資產——美債 250 年故事</span>
+    </div>
+
+    <div class="concept" onclick="toggleConcept(this)">
+      <div class="concept-head">
+        <div class="concept-name"><span class="concept-emoji">🏴‍☠️</span>1776 年：美國的第一張債——為了打仗，先借錢再說</div>
+        <span class="concept-toggle">+</span>
+      </div>
+      <div class="concept-body">
+        <p class="def"><span class="term">美國公債<span class="en">（US Treasury）</span></span></span>的起源，是一張打仗借來的欠條。1776 年美國宣布獨立，但剛成立的新政府根本沒有錢——軍隊的薪水、武器、糧食全靠借。第一任財政部長漢彌爾頓（Alexander Hamilton）做了一個關鍵決定：把所有州的戰爭債務統一由聯邦政府承擔，並承諾「一定還清」。</p>
+        <div class="example">
+          <div class="example-label">📜 故事現場</div>
+          <p>1790 年，漢彌爾頓在國會發表《公共信用報告》，說服議員：「美國必須有良好的信用，才能在未來繼續借到錢打仗、建設國家。」他的邏輯是——債務不是恥辱，是信用的象徵。這個觀念成為美債「信用神話」的起點。</p>
+        </div>
+        <div class="keypoint">
+          <span class="keypoint-icon">💡</span>
+          <span>漢彌爾頓的遺產：美國從建國第一天就知道「借錢要還、信用要顧」，這個承諾維持了 250 年，讓美債成為全球最被信任的資產。</span>
+        </div>
+      </div>
+    </div>
+
+    <div class="concept" onclick="toggleConcept(this)">
+      <div class="concept-head">
+        <div class="concept-name"><span class="concept-emoji">💣</span>1930 年代：大蕭條——債券成了最後的避難所</div>
+        <span class="concept-toggle">+</span>
+      </div>
+      <div class="concept-body">
+        <p class="def">1929 年股市崩潰，大蕭條席捲全球。美國 <span class="abbr-term">GDP<span class="en">（Gross Domestic Product，國內生產毛額）</span></span> 腰斬、失業率飆至 25%。在這場浩劫裡，<span class="term">美國公債<span class="en">（US Treasury）</span></span></span>是少數沒有崩潰的資產——因為大家相信政府「至少不會倒」，紛紛把錢湧入美債避難。這奠定了「美債 = 危機避風港」的地位。</p>
+        <div class="example">
+          <div class="example-label">🌪️ 故事現場</div>
+          <p>1933 年，羅斯福總統上任，宣布「新政（New Deal）」：政府大舉借債蓋公路、水壩、學校，創造就業。美債發行量暴增，但同時間市場依然信任美債，因為大家看到政府在「用借來的錢做有意義的事」。</p>
+        </div>
+      </div>
+    </div>
+
+    <div class="concept" onclick="toggleConcept(this)">
+      <div class="concept-head">
+        <div class="concept-name"><span class="concept-emoji">🔫</span>二戰時期：愛國債券——全民買債打仗</div>
+        <span class="concept-toggle">+</span>
+      </div>
+      <div class="concept-body">
+        <p class="def">1941-1945 年，美國二戰期間推出「戰爭債券（War Bonds）」，向全體公民募資打仗。好萊塢明星、廣播電台、學校全面動員，鼓勵每個美國人買債支持前線。</p>
+        <div class="example">
+          <div class="example-label">🎬 故事現場</div>
+          <p>卡通人物「巴格斯兔」（Bugs Bunny）出現在戰爭債券廣告裡，對著小朋友說「買債券！打希特勒！」整個國家把「買國債」當成愛國義務。二戰期間美國共募集超過 1,850 億美元，相當於今日數兆美元規模。</p>
+        </div>
+        <div class="keypoint">
+          <span class="keypoint-icon">🇺🇸</span>
+          <span>這段歷史造就了美國「公民與國債的情感連結」——美債不只是投資工具，也是國家認同的象徵。這個文化背景，讓後來的美債危機討論特別政治敏感。</span>
+        </div>
+      </div>
+    </div>
+
+    <div class="concept" onclick="toggleConcept(this)">
+      <div class="concept-head">
+        <div class="concept-name"><span class="concept-emoji">🔥</span>1970 年代：尼克森衝擊 + 石油危機——美債最黑暗的十年</div>
+        <span class="concept-toggle">+</span>
+      </div>
+      <div class="concept-body">
+        <p class="def">1971 年，尼克森宣布美元脫離<span class="term">金本位<span class="en">（Gold Standard）</span></span>（不再以黃金支撐），史稱「尼克森衝擊」。此後美元匯率自由浮動，通膨失控，1979 年通膨率高達 14%。美債投資人的實質報酬被通膨「吃光」，是美債最慘的年代。</p>
+        <div class="timeline">
+          <div class="timeline-item">
+            <div class="timeline-year">1971</div>
+            尼克森宣布「暫停美元兌黃金兌換」，<span class="term">布列敦森林體系<span class="en">（Bretton Woods System）</span></span>崩潰，美元自由浮動
+          </div>
+          <div class="timeline-item">
+            <div class="timeline-year">1973</div>
+            第一次石油危機，OPEC 石油禁運，油價暴漲四倍，通膨狂飆
+          </div>
+          <div class="timeline-item">
+            <div class="timeline-year">1979</div>
+            通膨衝破 14%。Fed 主席伏克爾（Volcker）上任，宣布激進升息
+          </div>
+          <div class="timeline-item">
+            <div class="timeline-year">1981</div>
+            基準利率升至 20%——史上最高。通膨終於被打倒，但經濟陷入衰退，失業率飆升至 10%
+          </div>
+        </div>
+        <div class="example">
+          <div class="example-label">💊 故事現場：伏克爾的「痛苦療法」</div>
+          <p>1979 年，伏克爾（Paul Volcker）身高 198 公分，抽著粗雪茄走進 Fed，對著委員會說：「我們必須讓通膨死。就算要殺死經濟一段時間，也值得。」他把利率升到 20%，讓美國陷入衰退，農民開著拖拉機把 Fed 總部圍起來抗議。但他成功了——通膨從 14% 降到 3%，奠定此後 40 年的低利率大多頭時代。</p>
+        </div>
+      </div>
+    </div>
+
+    <div class="concept" onclick="toggleConcept(this)">
+      <div class="concept-head">
+        <div class="concept-name"><span class="concept-emoji">💻</span>2008 年：<span class="term">金融海嘯<span class="en">（Global Financial Crisis）</span></span>——全世界同時狂買美債</div>
+        <span class="concept-toggle">+</span>
+      </div>
+      <div class="concept-body">
+        <p class="def">2008 年雷曼兄弟倒閉，全球金融體系面臨崩潰。諷刺的是，這場危機的源頭正是美國（<span class="term">次級房貸<span class="en">（Subprime Mortgage）</span></span>），但全球投資人的第一反應，是把錢塞進美債——「其他都可能倒，美國政府不會倒」。美債<span class="term">殖利率<span class="en">（Yield）</span></span>暴跌（價格暴漲），再次證明了美債的避險地位。</p>
+        <div class="example">
+          <div class="example-label">🌊 故事現場</div>
+          <p>2008 年 10 月，每天新聞都是銀行倒閉，股市崩潰。一個德國退休基金的經理說：「我不管其他，先把一切換成美債。」他的邏輯代表全世界：美國搞出的危機，全世界卻湧進<span class="term">美國公債<span class="en">（US Treasury）</span></span></span>避難——這個矛盾，就是「美元霸權」最真實的體現。</p>
+        </div>
+      </div>
+    </div>
+
+    <div class="concept" onclick="toggleConcept(this)">
+      <div class="concept-head">
+        <div class="concept-name"><span class="concept-emoji">📉</span>2011 年：美國史上首次信評遭降級——S&P 把 AAA 拿走了</div>
+        <span class="concept-toggle">+</span>
+      </div>
+      <div class="concept-body">
+        <p class="def">2011 年 8 月 5 日，標準普爾（S&P）史上首次將美國<span class="term">主權信評<span class="en">（Sovereign Credit Rating）</span></span>從 AAA 降至 AA+，理由是美國政治僵局導致財政改革遲緩。全球嚇了一跳——但發生了一件弔詭的事：美債<span class="term">殖利率<span class="en">（Yield）</span></span>反而下跌，因為大家還是覺得美債最安全。</p>
+        <div class="example">
+          <div class="example-label">😂 故事現場</div>
+          <p>消息一出，股市暴跌，大家本以為美債要崩。結果？資金從股市逃進美債，美債<span class="term">殖利率<span class="en">（Yield）</span></span>反跌。分析師苦笑：「大家在躲美國信評下調的衝擊，卻跑去買美債——被降級的美債還是最安全的地方。」這個矛盾說明：美債的地位不是靠評級，是靠沒有替代品。</p>
+        </div>
+        <div class="keypoint">
+          <span class="keypoint-icon">🇺🇸</span>
+          <span>2023 年 8 月，惠譽（Fitch）也把美國<span class="term">主權信評<span class="en">（Sovereign Credit Rating）</span></span>從 AAA 降至 AA+，原因同樣是<span class="term">財政赤字<span class="en">（Fiscal Deficit）</span></span>與政治僵局。市場依然照買美債——歷史重演。</span>
+        </div>
+      </div>
+    </div>
+  </div>
+
+<!-- ===== 美債隱藏問題（插入 s3 結尾） ===== -->
+  <div class="section-divider">
+    <span class="section-divider-label">⚠️ 美債的隱藏炸彈</span>
+  </div>
+
+  <div class="level-block">
+    <div class="level-header">
+      <div class="level-dot dot-hard"></div>
+      <span class="level-label label-hard">進階</span>
+      <span class="level-title">美債三大隱藏風險：<span class="term">財政赤字<span class="en">（Fiscal Deficit）</span></span>、外國拋售、<span class="term">流動性危機<span class="en">（Liquidity Crisis）</span></span></span>
+    </div>
+
+    <div class="concept" onclick="toggleConcept(this)">
+      <div class="concept-head">
+        <div class="concept-name"><span class="concept-emoji">💸</span>隱藏風險①：美國<span class="term">財政赤字<span class="en">（Fiscal Deficit）</span></span>爆炸，美債發行量沒有盡頭</div>
+        <span class="concept-toggle">+</span>
+      </div>
+      <div class="concept-body">
+        <p class="def">美國每年花的錢遠超過稅收，差額就靠「發新債」補——這叫<span class="term">財政赤字<span class="en">（Fiscal Deficit）</span></span>。問題是赤字越滾越大，美債發行量暴增，市場要吸收的供給越來越多，<span class="term">殖利率<span class="en">（Yield）</span></span>被迫越來越高。</p>
+        <div class="formula">
+          2024 美國<span class="term">財政赤字<span class="en">（Fiscal Deficit）</span></span>：約 1.8 兆美元<br>
+          <span class="term">美國公債<span class="en">（US Treasury）</span></span></span>總額：突破 <span>36 兆美元</span>（2025年）<br>
+          光是利息支出：每年超過 <span>1 兆美元</span><br>
+          → 利息比國防預算還高，史無前例
+        </div>
+        <div class="example">
+          <div class="example-label">🏠 生活比喻</div>
+          <p>你每個月薪水 5 萬，但花 8 萬，差 3 萬靠信用卡刷——每個月還要再刷一張新卡。久了之後，銀行發現你卡債越來越多，要給你新卡就要收更高利率（<span class="term">殖利率<span class="en">（Yield）</span></span>上升）。美國政府就是這樣，只是規模是幾十兆美元。</p>
+        </div>
+        <div class="monster-diagram">
+          <h3>💣 <span class="term">財政赤字<span class="en">（Fiscal Deficit）</span></span>的<span class="term">債務螺旋<span class="en">（Debt Spiral）</span></span></h3>
+          <div class="flow">
+            <div class="flow-box">赤字擴大 → 大量發新債</div>
+            <div class="flow-arrow">↓</div>
+            <div class="flow-box">供給增加 → <span class="term">殖利率<span class="en">（Yield）</span></span>上升（債要更高息才賣得掉）</div>
+            <div class="flow-arrow">↓</div>
+            <div class="flow-box">利息支出增加 → 赤字更大</div>
+            <div class="flow-arrow">↓</div>
+            <div class="flow-box danger">再發更多債 → 惡性循環 🔄</div>
+          </div>
+        </div>
+        <div class="keypoint">
+          <span class="keypoint-icon">⚠️</span>
+          <span>CBO（美國國會預算局）預測，若不改變財政路徑，2034 年<span class="term">美國公債<span class="en">（US Treasury）</span></span></span>可能超過 50 兆美元。這不是末日預言，但它讓「美債<span class="term">殖利率<span class="en">（Yield）</span></span>長期易升難降」的壓力一直存在。</span>
+        </div>
+      </div>
+    </div>
+
+    <div class="concept" onclick="toggleConcept(this)">
+      <div class="concept-head">
+        <div class="concept-name"><span class="concept-emoji">🌏</span>隱藏風險②：外國大買家正在悄悄撤退</div>
+        <span class="concept-toggle">+</span>
+      </div>
+      <div class="concept-body">
+        <p class="def">美債最大的外國買家——中國、日本——都在減持。這意味著美國的「老主顧」在縮手，美債需要找新買家，<span class="term">殖利率<span class="en">（Yield）</span></span>就得更高才能吸引人。</p>
+        <table>
+          <tr><th>國家</th><th>持倉高峰</th><th>現況（約）</th><th>減持原因</th></tr>
+          <tr><td>🇨🇳 中國</td><td>1.3 兆美元（2013）</td><td>約 7,500 億美元</td><td>去美元化、地緣政治對抗</td></tr>
+          <tr><td>🇯🇵 日本</td><td>1.3 兆美元</td><td>仍是最大外國持有者，但日銀升息後部分回流日債</td><td>日債<span class="term">殖利率<span class="en">（Yield）</span></span>上升，相對吸引力提高</td></tr>
+          <tr><td>🌍 其他央行</td><td>—</td><td>部分轉向黃金、人民幣資產</td><td>分散美元風險</td></tr>
+        </table>
+        <div class="example">
+          <div class="example-label">🏪 比喻</div>
+          <p>你開一家麵店（美債），以前最大的老主顧每天來（中日大量買），最近他們各種理由來得少了。你要維持生意，只能降價（提高<span class="term">殖利率<span class="en">（Yield）</span></span>）或找新客人（其他機構投資人）——但新客人通常要求更高利潤才願意來。</p>
+        </div>
+        <div class="news-connect">
+          <strong>📰 與今日新聞連結</strong>
+          外國大買家撤退 + <span class="term">凸性避險<span class="en">（Convexity Hedging）</span></span></span>賣壓 + <span class="term">財政赤字<span class="en">（Fiscal Deficit）</span></span>供給暴增，三股力量同時壓著美債<span class="term">殖利率<span class="en">（Yield）</span></span>往上走——這就是為什麼今天文章說「華爾街高度警戒」。不是單一問題，是問題疊問題。
+        </div>
+      </div>
+    </div>
+
+    <div class="concept" onclick="toggleConcept(this)">
+      <div class="concept-head">
+        <div class="concept-name"><span class="concept-emoji">🧊</span>隱藏風險③：美債市場<span class="term">流動性危機<span class="en">（Liquidity Crisis）</span></span>——有時連美債都難賣</div>
+        <span class="concept-toggle">+</span>
+      </div>
+      <div class="concept-body">
+        <p class="def">美債理論上是全球最安全、最好賣的資產，但在極端市場壓力下，連美債都可能出現「<span class="term">流動性枯竭<span class="en">（Liquidity Crunch）</span></span>」——想賣的人很多，願意接盤的人卻消失了。</p>
+        <div class="timeline">
+          <div class="timeline-item">
+            <div class="timeline-year">2020.03</div>
+            新冠疫情初期，美債市場閃崩：連美債都被瘋狂拋售，Fed 緊急無限量 <span class="abbr-term">QE<span class="en">（Quantitative Easing，量化寬鬆）</span></span> 才救回來
+          </div>
+          <div class="timeline-item">
+            <div class="timeline-year">2022.09</div>
+            英國迷你預算危機：英國公債暴跌，差點引發英國退休基金系統崩潰（英格蘭銀行緊急救市）
+          </div>
+          <div class="timeline-item">
+            <div class="timeline-year">2023.03</div>
+            矽谷銀行（<span class="abbr-term">SVB<span class="en">（Silicon Valley Bank，矽谷銀行）</span></span>）倒閉：長期美債部位大虧 → 擠兌 → 倒閉，美債流動性風險具體示警
+          </div>
+        </div>
+        <div class="keypoint">
+          <span class="keypoint-icon">🚨</span>
+          <span><span class="term">流動性危機<span class="en">（Liquidity Crisis）</span></span>的可怕之處：平時沒有問題，一旦發生就是「所有人同時往同一個門口擠」，<span class="term">凸性避險<span class="en">（Convexity Hedging）</span></span></span>的拋售潮就是可能引發這種踩踏的導火線之一。</span>
+        </div>
+      </div>
+    </div>
+  </div>
+
+<!-- ===== 深潛（學生） ===== -->
+<div id="s4" class="section">
+  <div class="intro-strip">
+    <span class="icon">🟣</span>
+    <span>領域深潛｜金融、財管、會計系學生才要懂的技術細節</span>
+  </div>
+
+  <!-- EXPERT 1 -->
+  <div class="level-block">
+    <div class="level-header">
+      <div class="level-dot dot-expert"></div>
+      <span class="level-label label-expert">深潛</span>
+      <span class="level-title"><span class="term">存續期間<span class="en">（Duration）</span></span>（Duration）：<span class="term">殖利率<span class="en">（Yield）</span></span>敏感度的正式定義</span>
+    </div>
+
+    <div class="concept" onclick="toggleConcept(this)">
+      <div class="concept-head">
+        <div class="concept-name"><span class="concept-emoji">📐</span>Modified Duration：<span class="term">殖利率<span class="en">（Yield）</span></span>每變動 1%，價格差多少？</div>
+        <span class="concept-toggle">+</span>
+      </div>
+      <div class="concept-body">
+        <p class="def">Modified Duration（<span class="term">修正<span class="term">存續期間<span class="en">（Duration）</span></span><span class="en">（Modified Duration）</span></span>）是衡量債券對<span class="term">殖利率<span class="en">（Yield）</span></span>變動之敏感度的標準指標。Duration = 10 表示<span class="term">殖利率<span class="en">（Yield）</span></span>每上升 1%，債券價格約下跌 10%。</p>
+        <div class="formula">
+          <span><span class="term">修正<span class="term">存續期間<span class="en">（Duration）</span></span><span class="en">（Modified Duration）</span></span>公式（概念版）：</span><br>
+          ΔP / P ≈ <span>-D × Δy</span><br><br>
+          P = 債券價格<br>
+          D = <span class="term">修正<span class="term">存續期間<span class="en">（Duration）</span></span><span class="en">（Modified Duration）</span></span><br>
+          Δy = <span class="term">殖利率<span class="en">（Yield）</span></span>變動量
+        </div>
+        <div class="example">
+          <div class="example-label">📊 數字舉例</div>
+          <p>30 年期美債的 Duration 約為 17-20。<br>
+          <span class="term">殖利率<span class="en">（Yield）</span></span>從 4.5% 漲到 5.5%（+1%）<br>
+          → 債券價格跌約 17-20%<br>
+          → 這就是為什麼長天期公債在升息周期跌得最慘。</p>
+        </div>
+        <div class="keypoint">
+          <span class="keypoint-icon">🔑</span>
+          <span><span class="abbr-term">MBS<span class="en">（Mortgage-Backed Securities，不動產抵押貸款證券）</span></span> 的 Duration 是「會動的」——當<span class="term">殖利率<span class="en">（Yield）</span></span>上升，屋主不再<span class="term">提前還款<span class="en">（Prepayment）</span></span>，<span class="abbr-term">MBS<span class="en">（Mortgage-Backed Securities，不動產抵押貸款證券）</span></span> 的 Duration 被動拉長，讓損失更大。這就是「<span class="term">負<span class="term">凸性<span class="en">（Convexity）</span></span><span class="en">（Negative Convexity）</span></span>（Negative Convexity）」。</span>
+        </div>
+      </div>
+    </div>
+
+    <div class="concept" onclick="toggleConcept(this)">
+      <div class="concept-head">
+        <div class="concept-name"><span class="concept-emoji">📉</span><span class="term">負<span class="term">凸性<span class="en">（Convexity）</span></span><span class="en">（Negative Convexity）</span></span>（Negative Convexity）vs 正<span class="term">凸性<span class="en">（Convexity）</span></span></div>
+        <span class="concept-toggle">+</span>
+      </div>
+      <div class="concept-body">
+        <div class="formula">
+          一般債券（正<span class="term">凸性<span class="en">（Convexity）</span></span>）：<br>
+          <span class="term">殖利率<span class="en">（Yield）</span></span>↑ → 價格↓（幅度「遞減」）<br>
+          <span class="term">殖利率<span class="en">（Yield）</span></span>↓ → 價格↑（幅度「遞增」）<br><br>
+          <span>MBS（<span class="term">負<span class="term">凸性<span class="en">（Convexity）</span></span><span class="en">（Negative Convexity）</span></span>）：</span><br>
+          <span class="term">殖利率<span class="en">（Yield）</span></span>↑ → <span class="term">提前還款<span class="en">（Prepayment）</span></span>減少 → Duration 拉長 → 跌更多<br>
+          <span class="term">殖利率<span class="en">（Yield）</span></span>↓ → <span class="term">提前還款<span class="en">（Prepayment）</span></span>增加 → Duration 縮短 → 漲較少
+        </div>
+        <div class="example">
+          <div class="example-label">🎢 比喻</div>
+          <p>正<span class="term">凸性<span class="en">（Convexity）</span></span> = 走在緩坡上，上坡費力但下坡省力<br>
+          <span class="term">負<span class="term">凸性<span class="en">（Convexity）</span></span><span class="en">（Negative Convexity）</span></span>（<span class="abbr-term">MBS<span class="en">（Mortgage-Backed Securities，不動產抵押貸款證券）</span></span>）= 越往下跌，坡越陡——<span class="abbr-term">MBS<span class="en">（Mortgage-Backed Securities，不動產抵押貸款證券）</span></span> 讓你跌的時候跌很慘，漲的時候卻比別人少賺</p>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- EXPERT 2 -->
+  <div class="level-block">
+    <div class="level-header">
+      <div class="level-dot dot-expert"></div>
+      <span class="level-label label-expert">深潛</span>
+      <span class="level-title">利率衍生品：投資人怎麼做<span class="term">凸性避險<span class="en">（Convexity Hedging）</span></span></span>？</span>
+    </div>
+
+    <div class="concept" onclick="toggleConcept(this)">
+      <div class="concept-head">
+        <div class="concept-name"><span class="concept-emoji">⚙️</span><span class="term">利率交換<span class="en">（Interest Rate Swap）</span></span>（Interest Rate Swap）和國債期貨</div>
+        <span class="concept-toggle">+</span>
+      </div>
+      <div class="concept-body">
+        <p class="def"><span class="abbr-term">MBS<span class="en">（Mortgage-Backed Securities，不動產抵押貸款證券）</span></span> 投資人進行<span class="term">凸性避險<span class="en">（Convexity Hedging）</span></span></span>，常用的工具包括：</p>
+        <table>
+          <tr><th>工具</th><th>做法</th><th>效果</th></tr>
+          <tr><td>美債期貨（空頭）</td><td>賣出 10Y/30Y 美債期貨</td><td><span class="term">殖利率<span class="en">（Yield）</span></span>上升時期貨獲利，抵銷 <span class="abbr-term">MBS<span class="en">（Mortgage-Backed Securities，不動產抵押貸款證券）</span></span> 損失</td></tr>
+          <tr><td><span class="term">利率交換<span class="en">（Interest Rate Swap）</span></span>（Pay Fixed）</td><td>付固定利率、收浮動利率</td><td><span class="term">殖利率<span class="en">（Yield）</span></span>上升時浮動收益增加</td></tr>
+          <tr><td><span class="term">利率選擇權<span class="en">（Interest Rate Option）</span></span>（Swaption）</td><td>買入<span class="term">殖利率<span class="en">（Yield）</span></span>上升的選擇權</td><td>尾部風險保護，但需付權利金</td></tr>
+        </table>
+        <div class="example">
+          <div class="example-label">🏋️ 比喻</div>
+          <p>你有一籃雞蛋（<span class="abbr-term">MBS<span class="en">（Mortgage-Backed Securities，不動產抵押貸款證券）</span></span>），怕地震時蛋破。你買了一份「地震保險」（空頭期貨）：地震沒來，保費白繳；地震來了，保險賠你，抵銷損失。<span class="term">凸性避險<span class="en">（Convexity Hedging）</span></span></span>就是這個概念。</p>
+        </div>
+        <div class="news-connect">
+          <strong>📰 新聞連結</strong>
+          摩根士丹利的 Khanduja 觀察到「市場出現大量美債期貨賣盤」，就是 <span class="abbr-term">MBS<span class="en">（Mortgage-Backed Securities，不動產抵押貸款證券）</span></span> 投資人在執行<span class="term">凸性避險<span class="en">（Convexity Hedging）</span></span></span>。這個操作規模大到了推動整體市場的程度。
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- EXPERT 3 -->
+  <div class="level-block">
+    <div class="level-header">
+      <div class="level-dot dot-expert"></div>
+      <span class="level-label label-expert">深潛</span>
+      <span class="level-title"><span class="abbr-term">OAS<span class="en">（Option-Adjusted Spread，選擇權調整利差）</span></span>、TBA 市場、機構 <span class="abbr-term">MBS<span class="en">（Mortgage-Backed Securities，不動產抵押貸款證券）</span></span> 的結構細節</span>
+    </div>
+
+    <div class="concept" onclick="toggleConcept(this)">
+      <div class="concept-head">
+        <div class="concept-name"><span class="concept-emoji">🔬</span>OAS（<span class="term">選擇權調整利差<span class="en">（Option-Adjusted Spread，縮寫 OAS）</span></span>）：評估 <span class="abbr-term">MBS<span class="en">（Mortgage-Backed Securities，不動產抵押貸款證券）</span></span> 真實報酬</div>
+        <span class="concept-toggle">+</span>
+      </div>
+      <div class="concept-body">
+        <p class="def">OAS（Option-Adjusted Spread）= <span class="abbr-term">MBS<span class="en">（Mortgage-Backed Securities，不動產抵押貸款證券）</span></span> 在「假設所有選擇權（<span class="term">提前還款<span class="en">（Prepayment）</span></span>選擇）都被考量後」，相對無風險利率的額外報酬。</p>
+        <div class="formula">
+          <span class="abbr-term">MBS<span class="en">（Mortgage-Backed Securities，不動產抵押貸款證券）</span></span> 實際<span class="term">殖利率<span class="en">（Yield）</span></span> = 無風險<span class="term">殖利率<span class="en">（Yield）</span></span> + <span class="abbr-term">OAS<span class="en">（Option-Adjusted Spread，選擇權調整利差）</span></span><br>
+          <span><span class="abbr-term">OAS<span class="en">（Option-Adjusted Spread，選擇權調整利差）</span></span> 越高 → <span class="abbr-term">MBS<span class="en">（Mortgage-Backed Securities，不動產抵押貸款證券）</span></span> 相對便宜 / 風險溢價高</span><br>
+          <span class="abbr-term">OAS<span class="en">（Option-Adjusted Spread，選擇權調整利差）</span></span> 越低 → <span class="abbr-term">MBS<span class="en">（Mortgage-Backed Securities，不動產抵押貸款證券）</span></span> 相對貴 / 市場搶買
+        </div>
+        <div class="example">
+          <div class="example-label">📊 實務應用</div>
+          <p>機構投資人看 <span class="abbr-term">OAS<span class="en">（Option-Adjusted Spread，選擇權調整利差）</span></span> 決定「現在 <span class="abbr-term">MBS<span class="en">（Mortgage-Backed Securities，不動產抵押貸款證券）</span></span> 有沒有投資價值」。<span class="abbr-term">OAS<span class="en">（Option-Adjusted Spread，選擇權調整利差）</span></span> 突然走寬，代表市場在拋售 MBS（通常就是<span class="term">凸性避險<span class="en">（Convexity Hedging）</span></span></span>壓力出現）。這是債市分析師每天盯盤的指標之一。</p>
+        </div>
+        <div class="keypoint">
+          <span class="keypoint-icon">🎓</span>
+          <span>想走固定收益分析、資產管理的同學，<span class="abbr-term">OAS<span class="en">（Option-Adjusted Spread，選擇權調整利差）</span></span> 是必考的面試題。建議搭配 Bloomberg 或 Yield Book 系統練習拆解 <span class="abbr-term">MBS<span class="en">（Mortgage-Backed Securities，不動產抵押貸款證券）</span></span> 的 <span class="abbr-term">OAS<span class="en">（Option-Adjusted Spread，選擇權調整利差）</span></span> 分析。</span>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- ===== 日本篇 ===== -->
+<div id="s5" class="section">
+  <div class="intro-strip">
+    <span class="icon">🗾</span>
+    <span>日本篇｜為什麼「日本借錢以前不用利率，現在要了」？這又怎麼搞亂全球債市？</span>
+  </div>
+
+  <!-- EASY JPN -->
+  <div class="level-block">
+    <div class="level-header">
+      <div class="level-dot dot-easy"></div>
+      <span class="level-label label-easy">簡單</span>
+      <span class="level-title">日本是「<span class="term">負利率<span class="en">（Negative Interest Rate）</span></span>怪國」：借錢還有利息拿</span>
+    </div>
+
+    <div class="concept" onclick="toggleConcept(this)">
+      <div class="concept-head">
+        <div class="concept-name"><span class="concept-emoji">🇯🇵</span><span class="term">負利率<span class="en">（Negative Interest Rate）</span></span>時代：借給銀行，銀行還要付費</div>
+        <span class="concept-toggle">+</span>
+      </div>
+      <div class="concept-body">
+        <p class="def">2016 年起，日本央行（日銀）實施「<span class="term">負利率政策<span class="en">（Negative Interest Rate Policy，縮寫 NIRP）</span></span></span>」：銀行把錢存在日銀，不但沒利息，反而要付手續費。目的是逼銀行把錢貸出去、刺激經濟。</p>
+        <div class="japan-box">
+          <div class="japan-flag">🏯 日本經濟背景</div>
+          <p style="font-size:14px;line-height:1.8">日本在 1990 年代<span class="term">資產泡沫<span class="en">（Asset Bubble）</span></span>破裂後，陷入「<span class="term">失落三十年<span class="en">（Lost Three Decades）</span></span>」——<span class="term">通縮<span class="en">（Deflation）</span></span>（物價反而跌）、人口老化、企業不願投資。一般各國的問題是「怎麼抑制通膨」，日本的問題反而是「怎麼讓通膨起來」。因此利率被壓到 0% 以下。</p>
+        </div>
+        <div class="example">
+          <div class="example-label">😲 瘋狂的舉例</div>
+          <p>你去 7-11 買東西，老闆不只不收錢，還「倒貼你錢」讓你拿——這就是<span class="term">負利率<span class="en">（Negative Interest Rate）</span></span>的邏輯：刺激你快去花錢、投資，別存錢。</p>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- MID JPN -->
+  <div class="level-block">
+    <div class="level-header">
+      <div class="level-dot dot-mid"></div>
+      <span class="level-label label-mid">中等</span>
+      <span class="level-title">日本<span class="term">套利交易<span class="en">（Carry Trade，即利差交易）</span></span></span>（Carry Trade）：全球最大的隱形資金流</span>
+    </div>
+
+    <div class="concept" onclick="toggleConcept(this)">
+      <div class="concept-head">
+        <div class="concept-name"><span class="concept-emoji">💴</span><span class="term">日圓<span class="term">套利交易<span class="en">（Carry Trade，即利差交易）</span></span></span></span>：借日圓買美債，穩賺利差</div>
+        <span class="concept-toggle">+</span>
+      </div>
+      <div class="concept-body">
+        <p class="def">當日本利率 ≈ 0%、美國利率 5%，投資人可以：借日圓（利息接近 0）→ 換成美元 → 買美債（賺 5% 利息）→ 淨賺約 5% 利差。這叫「<span class="term">日圓<span class="term">套利交易<span class="en">（Carry Trade，即利差交易）</span></span></span></span>（JPY Carry Trade）」。</p>
+        <div class="example">
+          <div class="example-label">💡 實際操作舉例</div>
+          <p>你用 0% 借了 1 億日圓，換成美金，買美債賺 5%，一年後再換回日圓還錢——只要匯率不大幅波動，你穩穩賺 5%。全球很多大型投資人都在這樣做，總規模估計數十兆日圓。</p>
+        </div>
+        <div class="keypoint">
+          <span class="keypoint-icon">💥</span>
+          <span>問題來了：一旦日本升息，這個免費的「借錢工具」消失了。所有借日圓投資的人，都要趕快還錢（賣掉美債、換回日圓），引發市場震動。</span>
+        </div>
+      </div>
+    </div>
+
+    <div class="concept" onclick="toggleConcept(this)">
+      <div class="concept-head">
+        <div class="concept-name"><span class="concept-emoji">🌊</span>2024 年 8 月：日銀升息 → 全球股市崩盤一日</div>
+        <span class="concept-toggle">+</span>
+      </div>
+      <div class="concept-body">
+        <p class="def">2024 年 7 月底，日銀突然宣布升息至 0.25%，全球<span class="term">套利交易<span class="en">（Carry Trade，即利差交易）</span></span></span>瞬間逆轉。</p>
+        <div class="timeline">
+          <div class="timeline-item">
+            <div class="timeline-year">2024.07.31</div>
+            日銀升息至 0.25%，日圓快速升值
+          </div>
+          <div class="timeline-item">
+            <div class="timeline-year">2024.08.05</div>
+            全球股市暴跌（日股單日跌 12%，史上最大單日跌幅之一）。原因：<span class="term">套利交易<span class="en">（Carry Trade，即利差交易）</span></span></span>平倉潮，全球資產遭拋售
+          </div>
+          <div class="timeline-item">
+            <div class="timeline-year">2025-2026</div>
+            日銀持續緩步升息，日債（<span class="abbr-term">JGB<span class="en">（Japanese Government Bond，日本公債）</span></span>）<span class="term">殖利率<span class="en">（Yield）</span></span>升高，影響持續擴散
+          </div>
+        </div>
+        <div class="example">
+          <div class="example-label">🏚️ 比喻</div>
+          <p><span class="term">日圓<span class="term">套利交易<span class="en">（Carry Trade，即利差交易）</span></span></span></span>就像全球投資人一起在日本租了一間超便宜的倉庫（0% 貸款）存貨（美債、股票）。日銀突然宣布漲房租（升息），大家趕著搬貨離開，市場一下子湧現大量拋售。</p>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- HARD JPN -->
+  <div class="level-block">
+    <div class="level-header">
+      <div class="level-dot dot-hard"></div>
+      <span class="level-label label-hard">進階</span>
+      <span class="level-title">日債（<span class="abbr-term">JGB<span class="en">（Japanese Government Bond，日本公債）</span></span>）<span class="term">殖利率<span class="en">（Yield）</span></span>上升 → 美債<span class="term">殖利率<span class="en">（Yield）</span></span>也跟著飆？</span>
+    </div>
+
+    <div class="concept" onclick="toggleConcept(this)">
+      <div class="concept-head">
+        <div class="concept-name"><span class="concept-emoji">🔗</span>日本是美債最大外國買家：他們一動，美債就震</div>
+        <span class="concept-toggle">+</span>
+      </div>
+      <div class="concept-body">
+        <p class="def">日本是持有<span class="term">美國公債<span class="en">（US Treasury）</span></span></span>最多的「外國」投資人（超過 1 兆美元）。日本的保險公司、退休基金長期買美債，是因為日本本土利率太低。一旦日債<span class="term">殖利率<span class="en">（Yield）</span></span>升高，他們可能「回頭買日債」，賣掉美債。</p>
+        <div class="monster-diagram">
+          <h3>🔗 日美債市連動機制</h3>
+          <div class="flow">
+            <div class="flow-box">日銀升息 → 日債<span class="term">殖利率<span class="en">（Yield）</span></span>上升</div>
+            <div class="flow-arrow">↓</div>
+            <div class="flow-box">日本機構投資人：「日債現在有利息了，可以回頭買！」</div>
+            <div class="flow-arrow">↓</div>
+            <div class="flow-box">賣出美債 → 換回日圓、買日債</div>
+            <div class="flow-arrow">↓</div>
+            <div class="flow-box danger">美債需求減少 → 美債價格跌 → 美債<span class="term">殖利率<span class="en">（Yield）</span></span>上升</div>
+          </div>
+        </div>
+        <div class="keypoint">
+          <span class="keypoint-icon">🌐</span>
+          <span>所以「日本借錢不用利率」的時代結束，不只是日本的事——它會直接推高美債<span class="term">殖利率<span class="en">（Yield）</span></span>，進一步惡化「<span class="term">凸性怪獸<span class="en">（Convexity Monster）</span></span>」的問題。</span>
+        </div>
+      </div>
+    </div>
+
+    <div class="concept" onclick="toggleConcept(this)">
+      <div class="concept-head">
+        <div class="concept-name"><span class="concept-emoji">🧩</span>YCC（<span class="term">殖利率曲線控制<span class="en">（Yield Curve Control，縮寫 YCC）</span></span>）：日銀以前的神盾，現在拆了</div>
+        <span class="concept-toggle">+</span>
+      </div>
+      <div class="concept-body">
+        <p class="def">日銀曾實施 YCC（Yield Curve Control）：承諾把 10 年期日債<span class="term">殖利率<span class="en">（Yield）</span></span>「釘住」在 0% 附近。為此，日銀無限量買進日債，壓住<span class="term">殖利率<span class="en">（Yield）</span></span>。</p>
+        <div class="example">
+          <div class="example-label">🏛️ 比喻</div>
+          <p><span class="abbr-term">YCC<span class="en">（Yield Curve Control，殖利率曲線控制）</span></span> 就像日銀站在市場裡喊：「日債<span class="term">殖利率<span class="en">（Yield）</span></span>敢超過 1%，我就全部買回來！」這個承諾讓市場不敢亂動。但 2024 年日銀開始放棄 <span class="abbr-term">YCC<span class="en">（Yield Curve Control，殖利率曲線控制）</span></span>，等於拆掉了這個神盾，日債<span class="term">殖利率<span class="en">（Yield）</span></span>開始自由浮動。</p>
+        </div>
+        <div class="formula">
+          <span class="abbr-term">YCC<span class="en">（Yield Curve Control，殖利率曲線控制）</span></span> 結束後的連鎖效應：<br>
+          日債<span class="term">殖利率<span class="en">（Yield）</span></span>自由浮動 ↑<br>
+          <span>↓</span><br>
+          <span class="term">日圓<span class="term">套利交易<span class="en">（Carry Trade，即利差交易）</span></span></span></span>成本上升<br>
+          <span>↓</span><br>
+          日本機構賣美債買日債<br>
+          <span>↓</span><br>
+          美債<span class="term">殖利率<span class="en">（Yield）</span></span>上升 → <span class="term">凸性怪獸<span class="en">（Convexity Monster）</span></span>更兇猛
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- 整合 -->
+  <div class="section-divider">
+    <span class="section-divider-label">所有炸彈，全部連在一起</span>
+  </div>
+
+  <div class="monster-diagram" style="text-align:left">
+    <h3 style="text-align:center">🕸️ 完整因果網路圖</h3>
+    <div style="font-size:13.5px;line-height:2;color:#3a2e20">
+      <strong style="color:var(--accent)">美國端：</strong><br>
+      Fed 升息 → 美債<span class="term">殖利率<span class="en">（Yield）</span></span>上升 → <span class="abbr-term">MBS<span class="en">（Mortgage-Backed Securities，不動產抵押貸款證券）</span></span> 價格跌 → <span class="abbr-term">MBS<span class="en">（Mortgage-Backed Securities，不動產抵押貸款證券）</span></span> 投資人需要<span class="term">凸性避險<span class="en">（Convexity Hedging）</span></span></span> → 更多美債被拋售<br><br>
+      <strong style="color:#2c3e50">日本端：</strong><br>
+      日銀升息 → <span class="abbr-term">YCC<span class="en">（Yield Curve Control，殖利率曲線控制）</span></span> 解除 → 日債<span class="term">殖利率<span class="en">（Yield）</span></span>上升 → 日本機構賣美債回國 → 美債供給增加、需求減<br><br>
+      <strong style="color:var(--expert)">聯準會退場：</strong><br>
+      Fed <span class="term">縮表<span class="en">（Balance Sheet Reduction）</span></span>、不買 <span class="abbr-term">MBS<span class="en">（Mortgage-Backed Securities，不動產抵押貸款證券）</span></span> → 市場穩定力量消失 → 避險基金主導 → <span class="term">凸性避險<span class="en">（Convexity Hedging）</span></span></span>更劇烈<br><br>
+      <div style="background:var(--accent);color:white;padding:12px 16px;border-radius:4px;margin-top:10px;font-weight:700;text-align:center;font-size:14px">
+        三股力量同時推動美債<span class="term">殖利率<span class="en">（Yield）</span></span>上升 → <span class="term">凸性怪獸<span class="en">（Convexity Monster）</span></span>甦醒 → 市場波動放大
+      </div>
+    </div>
+  </div>
+
+  <div class="keypoint" style="margin-top:24px">
+    <span class="keypoint-icon">🇹🇼</span>
+    <span>對台灣投資人的意義：這套連動讓美債<span class="term">殖利率<span class="en">（Yield）</span></span>「易漲難跌」，外資長期面臨更高的機會成本，台股波動可能跟著放大。持有半導體、科技成長股的投資人，更要留意這個背景風險。</span>
+  </div>
+
+  <div class="section-divider">
+    <span class="section-divider-label">📖 日本與美債的百年糾葛</span>
+  </div>
+
+  <div class="level-block">
+    <div class="level-header">
+      <div class="level-dot dot-hard"></div>
+      <span class="level-label label-hard">進階</span>
+      <span class="level-title">泡沫、<span class="term">通縮<span class="en">（Deflation）</span></span>、零利率——日本如何一步步走進這個局</span>
+    </div>
+
+    <div class="concept" onclick="toggleConcept(this)">
+      <div class="concept-head">
+        <div class="concept-name"><span class="concept-emoji">🗼</span>1980 年代末：日本是全世界最有錢的國家，然後⋯⋯</div>
+        <span class="concept-toggle">+</span>
+      </div>
+      <div class="concept-body">
+        <p class="def">1980 年代，日本是全球第二大經濟體，東京地產市值超過整個美國，日本公司瘋狂收購美國企業和地標（包括洛克菲勒中心）。全日本都覺得「這個榮景永遠不會結束」。</p>
+        <div class="example">
+          <div class="example-label">🏙️ 故事現場</div>
+          <p>1989 年，東京皇居周邊的土地，估值超過整個加拿大。計程車司機炒股賺錢、家庭主婦討論股票選股——全日本都在狂歡。日經指數在 12 月 29 日攻上 38,915 點高峰，然後，泡沫破了。</p>
+        </div>
+        <div class="timeline">
+          <div class="timeline-item">
+            <div class="timeline-year">1989.12</div>
+            日經指數創下 38,915 點歷史高峰，日本地產估值達到頂點
+          </div>
+          <div class="timeline-item">
+            <div class="timeline-year">1990</div>
+            <span class="abbr-term">BOJ<span class="en">（Bank of Japan，日本銀行）</span></span> 激進升息（從 2.5% 升至 6%），泡沫開始崩潰。股市、地產雙殺
+          </div>
+          <div class="timeline-item">
+            <div class="timeline-year">1992-1997</div>
+            銀行壞帳爆炸，企業大規模倒閉，日本進入「<span class="term">失落十年<span class="en">（Lost Decade）</span></span>」
+          </div>
+          <div class="timeline-item">
+            <div class="timeline-year">1997</div>
+            亞洲金融危機衝擊，日本主要銀行（山一證券、北海道拓殖銀行）相繼倒閉
+          </div>
+          <div class="timeline-item">
+            <div class="timeline-year">1999</div>
+            <span class="abbr-term">BOJ<span class="en">（Bank of Japan，日本銀行）</span></span> 宣布零利率——全球央行史上首例。「<span class="term">失落十年<span class="en">（Lost Decade）</span></span>」延伸成「<span class="term">失落二十年<span class="en">（Lost Two Decades）</span></span>」
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="concept" onclick="toggleConcept(this)">
+      <div class="concept-head">
+        <div class="concept-name"><span class="concept-emoji">🏦</span>日本為何成為美債最大買家：「錢在日本沒地方放」</div>
+        <span class="concept-toggle">+</span>
+      </div>
+      <div class="concept-body">
+        <p class="def">日本利率趨近零後，國內存款幾乎沒有利息。龐大的日本保險公司、退休基金必須「幫客戶的錢找出路」，最安全又有一點利息的地方，就是<span class="term">美國公債<span class="en">（US Treasury）</span></span></span>。日本就這樣，慢慢成為美債最大外國持有國。</p>
+        <div class="example">
+          <div class="example-label">💼 故事現場：日本歐巴桑的美債情緣</div>
+          <p>2000 年代，日本媒體出現一個詞：「渡邊太太（Mrs. Watanabe）」——代表日本家庭主婦把家庭積蓄拿去做外幣投資（買美元、澳幣資產賺利差）。這個現象說明：日本零利率，讓幾千億日圓的民間資金流向海外，其中很大一部分就是美債。</p>
+        </div>
+        <div class="keypoint">
+          <span class="keypoint-icon">🔗</span>
+          <span>日本「買美債」不是政治選擇，是財務上的無奈——國內放不了，只好放到美國去。這個「結構性需求」在日本升息後，正在慢慢改變。</span>
+        </div>
+      </div>
+    </div>
+
+    <div class="concept" onclick="toggleConcept(this)">
+      <div class="concept-head">
+        <div class="concept-name"><span class="concept-emoji">⚡</span>2024 年 8 月 5 日：那一天全球股市崩了——日圓套利的末日審判</div>
+        <span class="concept-toggle">+</span>
+      </div>
+      <div class="concept-body">
+        <p class="def">2024 年 7 月 31 日，<span class="abbr-term">BOJ<span class="en">（Bank of Japan，日本銀行）</span></span> 升息 0.25%。這個消息看起來很小，卻引爆了史上最大規模的日圓套利平倉潮。</p>
+        <div class="example">
+          <div class="example-label">🌊 故事現場：黑色星期一 2.0</div>
+          <p>8 月 5 日，東京開盤。日圓急速升值，借日圓炒股的投資人發現「還錢成本暴增」，開始瘋狂賣股換日圓。日經指數單日崩跌 4,451 點（約 12.4%），創下史上最大單日跌點紀錄，超越 1987 年黑色星期一。接著，台股、美股、韓股、歐股全面跟跌——全球投資人都在問同一個問題：「日圓套利到底有多大？」</p>
+        </div>
+        <div class="timeline">
+          <div class="timeline-item">
+            <div class="timeline-year">2024.07.31</div>
+            <span class="abbr-term">BOJ<span class="en">（Bank of Japan，日本銀行）</span></span> 升息至 0.25%，美日利差開始縮小，日圓啟動升值
+          </div>
+          <div class="timeline-item">
+            <div class="timeline-year">2024.08.02</div>
+            美國非農就業數據疲弱，衰退恐慌加劇，雙重利空疊加
+          </div>
+          <div class="timeline-item">
+            <div class="timeline-year">2024.08.05</div>
+            日經單日崩跌 12%，台股跌停千檔，全球 <span class="abbr-term">VIX<span class="en">（Volatility Index，股市恐慌指數）</span></span> 恐慌指數一日暴衝至 65
+          </div>
+          <div class="timeline-item">
+            <div class="timeline-year">2024.08.07</div>
+            <span class="abbr-term">BOJ<span class="en">（Bank of Japan，日本銀行）</span></span> 副總裁緊急出面「安撫市場」，暗示不會急於再升息，市場才止穩
+          </div>
+        </div>
+        <div class="keypoint">
+          <span class="keypoint-icon">🇹🇼</span>
+          <span>台股在 2024 年 8 月 5 日當天開盤觸及跌停，外資單日賣超超過 800 億台幣。這次事件讓台灣投資人第一次深刻感受「<span class="term">日圓<span class="term">套利交易<span class="en">（Carry Trade，即利差交易）</span></span></span></span>」的威力。</span>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="section-divider">
+    <span class="section-divider-label">⚠️ 日本的隱藏未爆彈</span>
+  </div>
+
+  <div class="level-block">
+    <div class="level-header">
+      <div class="level-dot dot-hard"></div>
+      <span class="level-label label-hard">進階</span>
+      <span class="level-title">日本三大隱藏問題：日圓崩潰、<span class="term">財政懸崖<span class="en">（Fiscal Cliff）</span></span>、出口陷阱</span>
+    </div>
+
+    <div class="concept" onclick="toggleConcept(this)">
+      <div class="concept-head">
+        <div class="concept-name"><span class="concept-emoji">💴</span>隱藏問題①：日圓貶到哪算完？「日圓保衛戰」的極限</div>
+        <span class="concept-toggle">+</span>
+      </div>
+      <div class="concept-body">
+        <p class="def">日銀維持低利率的代價之一，是日圓大幅貶值。2022-2024 年美日利差最大時，日圓兌美元從 110 跌到 160，創 30 年新低，引爆「到底要讓日圓跌到哪？」的政策信任危機。</p>
+        <div class="formula">
+          日圓貶值的兩面效果：<br>
+          <span>好處：</span>日本出口商收益提高（豐田在海外賺美元，換回日圓更多）<br>
+          <span>壞處：</span>進口物價飆漲（能源、食品幾乎全靠進口）<br>
+          → 一般日本老百姓的生活成本大增，薪資卻跟不上
+        </div>
+        <div class="example">
+          <div class="example-label">🛒 生活例子</div>
+          <p>日本人去超市，油品、小麥、大豆全是進口的，全部變貴。但老闆說「景氣好才能加薪」，景氣好靠低利率，低利率讓日圓貶——這個循環讓日本庶民越來越痛苦，卻又無解。</p>
+        </div>
+        <div class="keypoint">
+          <span class="keypoint-icon">🚨</span>
+          <span>財務省（日本財政部）曾多次「口頭干預」甚至直接入市拋售美元買日圓（日圓保衛戰）。2024 年估計動用逾 9 兆日圓（約 600 億美元）干預，但效果有限且成本極高。這筆外匯存底遲早有用完的一天。</span>
+        </div>
+      </div>
+    </div>
+
+    <div class="concept" onclick="toggleConcept(this)">
+      <div class="concept-head">
+        <div class="concept-name"><span class="concept-emoji">📉</span>隱藏問題②：日本<span class="term">財政懸崖<span class="en">（Fiscal Cliff）</span></span>——全球負債率最高的已開發國家</div>
+        <span class="concept-toggle">+</span>
+      </div>
+      <div class="concept-body">
+        <p class="def">日本的政府負債占 <span class="abbr-term">GDP<span class="en">（Gross Domestic Product，國內生產毛額）</span></span> 比率超過 260%，是全球主要國家中最高的——連希臘在最嚴重時也只有約 180%。一旦日債<span class="term">殖利率<span class="en">（Yield）</span></span>大幅上升，日本的利息支出將極難負擔。</p>
+        <div class="monster-diagram">
+          <h3>📊 主要國家政府負債占 <span class="abbr-term">GDP<span class="en">（Gross Domestic Product，國內生產毛額）</span></span> 比較</h3>
+          <div style="text-align:left;font-size:13.5px;padding:0 8px">
+            <div style="margin-bottom:10px">
+              <div style="display:flex;justify-content:space-between;margin-bottom:3px"><span>🇯🇵 日本</span><span style="color:var(--accent);font-weight:700">260%+</span></div>
+              <div style="background:var(--accent);height:10px;border-radius:2px;width:100%"></div>
+            </div>
+            <div style="margin-bottom:10px">
+              <div style="display:flex;justify-content:space-between;margin-bottom:3px"><span>🇺🇸 美國</span><span style="font-weight:700">123%</span></div>
+              <div style="background:var(--mid);height:10px;border-radius:2px;width:47%"></div>
+            </div>
+            <div style="margin-bottom:10px">
+              <div style="display:flex;justify-content:space-between;margin-bottom:3px"><span>🇮🇹 義大利</span><span style="font-weight:700">137%</span></div>
+              <div style="background:var(--mid);height:10px;border-radius:2px;width:53%"></div>
+            </div>
+            <div style="margin-bottom:10px">
+              <div style="display:flex;justify-content:space-between;margin-bottom:3px"><span>🇩🇪 德國</span><span style="color:var(--easy);font-weight:700">63%</span></div>
+              <div style="background:var(--easy);height:10px;border-radius:2px;width:24%"></div>
+            </div>
+            <div>
+              <div style="display:flex;justify-content:space-between;margin-bottom:3px"><span>🇹🇼 台灣</span><span style="color:var(--easy);font-weight:700">27%</span></div>
+              <div style="background:var(--easy);height:10px;border-radius:2px;width:10%"></div>
+            </div>
+          </div>
+        </div>
+        <div class="keypoint">
+          <span class="keypoint-icon">😰</span>
+          <span>日本能撐到現在，關鍵是「大多數日債被日本人自己持有」（約 90% 是國內投資人），且長期維持超低利率，所以利息壓力還可以撐。但一旦利率正常化，每升 1%，日本政府多付的利息就相當於幾十兆日圓——這是隱藏的財政時炸彈。</span>
+        </div>
+      </div>
+    </div>
+
+    <div class="concept" onclick="toggleConcept(this)">
+      <div class="concept-head">
+        <div class="concept-name"><span class="concept-emoji">🏭</span>隱藏問題③：升息傷日本企業——「<span class="term">殭屍企業<span class="en">（Zombie Companies）</span></span>」大清算風險</div>
+        <span class="concept-toggle">+</span>
+      </div>
+      <div class="concept-body">
+        <p class="def">日本低利率時代滋養了大量「<span class="term">殭屍企業<span class="en">（Zombie Companies）</span></span>」——靠超低利息借款勉強維生、無法正常盈利的公司。一旦利率正常化，這些公司的借貸成本急速上升，可能引發倒閉潮。</p>
+        <div class="example">
+          <div class="example-label">🧟 <span class="term">殭屍企業<span class="en">（Zombie Companies）</span></span>比喻</div>
+          <p>想像一家咖啡店，每個月靠銀行貸款付房租，因為貸款利率只有 0.1% 所以還撐得住。利率升到 3%，月付利息暴增，這家店就撐不下去了。日本有很多這樣的「殭屍公司」，升息是考驗他們的審判日。</p>
+        </div>
+        <div class="keypoint">
+          <span class="keypoint-icon">🌊</span>
+          <span><span class="abbr-term">BOJ<span class="en">（Bank of Japan，日本銀行）</span></span> 深知這個風險，這也是它「龜速升息」的原因之一。但拖太久，又讓問題繼續積累——這個兩難沒有完美解法。</span>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div style="margin-top:32px; padding: 20px; background:var(--paper2); border:1px solid var(--border); border-radius:4px;">
+    <div style="font-size:12px;font-family:'JetBrains Mono',monospace;letter-spacing:2px;color:var(--muted);margin-bottom:12px">📚 延伸關鍵字</div>
+    <span class="pill">日銀（<span class="abbr-term">BOJ<span class="en">（Bank of Japan，日本銀行）</span></span>）</span>
+    <span class="pill"><span class="abbr-term">YCC<span class="en">（Yield Curve Control，殖利率曲線控制）</span></span></span>
+    <span class="pill"><span class="abbr-term">JGB<span class="en">（Japanese Government Bond，日本公債）</span></span> 日本國債</span>
+    <span class="pill"><span class="term">日圓<span class="term">套利交易<span class="en">（Carry Trade，即利差交易）</span></span></span></span></span>
+    <span class="pill">美債<span class="term">殖利率<span class="en">（Yield）</span></span></span>
+    <span class="pill"><span class="abbr-term">MBS<span class="en">（Mortgage-Backed Securities，不動產抵押貸款證券）</span></span></span>
+    <span class="pill"><span class="term">凸性避險<span class="en">（Convexity Hedging）</span></span></span></span>
+    <span class="pill">MOVE Index</span>
+    <span class="pill">Duration</span>
+    <span class="pill">Negative Convexity</span>
+    <span class="pill"><span class="abbr-term">OAS<span class="en">（Option-Adjusted Spread，選擇權調整利差）</span></span></span>
+    <span class="pill">Fed <span class="term">縮表<span class="en">（Balance Sheet Reduction）</span></span>（<span class="abbr-term">QT<span class="en">（Quantitative Tightening，量化緊縮）</span></span>）</span>
+    <span class="pill"><span class="term">量化寬鬆<span class="en">（Quantitative Easing，縮寫 QE）</span></span>（<span class="abbr-term">QE<span class="en">（Quantitative Easing，量化寬鬆）</span></span>）</span>
+    <span class="pill">通膨</span>
+  </div>
+</div>
+
+<!-- ===== 日本央行 BOJ ===== -->
+<div id="s6" class="section">
+  <div class="intro-strip">
+    <span class="icon">🏯</span>
+    <span>日本央行（<span class="abbr-term">BOJ<span class="en">（Bank of Japan，日本銀行）</span></span>）完全圖解｜從「<span class="term">負利率<span class="en">（Negative Interest Rate）</span></span>怪國」到「升息震全球」，這 30 年日本到底在幹嘛？</span>
+  </div>
+
+  <!-- 機構介紹 -->
+  <div class="level-block">
+    <div class="level-header">
+      <div class="level-dot dot-easy"></div>
+      <span class="level-label label-easy">簡單</span>
+      <span class="level-title">日本央行（<span class="abbr-term">BOJ<span class="en">（Bank of Japan，日本銀行）</span></span>）是誰？組織與任務</span>
+    </div>
+
+    <div class="concept" onclick="toggleConcept(this)">
+      <div class="concept-head">
+        <div class="concept-name"><span class="concept-emoji">🏯</span><span class="abbr-term">BOJ<span class="en">（Bank of Japan，日本銀行）</span></span> 基本介紹：日本的「台灣央行」</div>
+        <span class="concept-toggle">+</span>
+      </div>
+      <div class="concept-body">
+        <p class="def">BOJ（Bank of Japan，日本銀行）成立於 1882 年，是日本的中央銀行，總部位於東京。主要任務是：維持物價穩定（目標通膨率 2%）、維持金融體系穩健、發行日圓。</p>
+        <table>
+          <tr><th>機構</th><th>國家</th><th>掌舵人（2024-）</th><th>主要武器</th></tr>
+          <tr><td>BOJ（日本銀行）</td><td>日本</td><td>植田和男（Ueda Kazuo）</td><td>短期利率、<span class="abbr-term">YCC<span class="en">（Yield Curve Control，殖利率曲線控制）</span></span>、<span class="abbr-term">QQE<span class="en">（Qualitative and Quantitative Easing，質化量化寬鬆）</span></span></td></tr>
+          <tr><td>Fed（聯準會）</td><td>美國</td><td>傑洛姆‧鮑爾（Jerome Powell）</td><td><span class="term">聯邦基金利率<span class="en">（Federal Funds Rate）</span></span>、<span class="abbr-term">QE<span class="en">（Quantitative Easing，量化寬鬆）</span></span>/<span class="abbr-term">QT<span class="en">（Quantitative Tightening，量化緊縮）</span></span></td></tr>
+          <tr><td>ECB（歐洲央行）</td><td>歐元區</td><td>拉加德（Christine Lagarde）</td><td>存款利率、TLTRO</td></tr>
+        </table>
+        <div class="keypoint">
+          <span class="keypoint-icon">🔑</span>
+          <span><span class="abbr-term">BOJ<span class="en">（Bank of Japan，日本銀行）</span></span> 最特別的地方：它曾是全球第一個實施「<span class="term">負利率<span class="en">（Negative Interest Rate）</span></span>」的主要央行，也是全球最後一個維持超寬鬆政策的主要經濟體——直到 2024 年才開始轉向。</span>
+        </div>
+      </div>
+    </div>
+
+    <div class="concept" onclick="toggleConcept(this)">
+      <div class="concept-head">
+        <div class="concept-name"><span class="concept-emoji">📉</span><span class="term">失落三十年<span class="en">（Lost Three Decades）</span></span>：為何日本利率要那麼低？</div>
+        <span class="concept-toggle">+</span>
+      </div>
+      <div class="concept-body">
+        <p class="def">1990 年日本<span class="term">資產泡沫<span class="en">（Asset Bubble）</span></span>崩潰，股市、房市腰斬，企業與家庭大規模還債、不消費，日本陷入長達 30 年的<span class="term">通縮螺旋<span class="en">（Deflationary Spiral）</span></span></span>。</p>
+        <div class="timeline">
+          <div class="timeline-item">
+            <div class="timeline-year">1989-1990</div>
+            日本股市、房市泡沫頂峰崩潰。日經 225 從 38,915 點跌至 15,000 點
+          </div>
+          <div class="timeline-item">
+            <div class="timeline-year">1999</div>
+            <span class="abbr-term">BOJ<span class="en">（Bank of Japan，日本銀行）</span></span> 首次實施「零利率政策（<span class="abbr-term">ZIRP<span class="en">（Zero Interest Rate Policy，零利率政策）</span></span>）」——全球首例
+          </div>
+          <div class="timeline-item">
+            <div class="timeline-year">2013</div>
+            黑田東彥就任，推出「<span class="term">安倍經濟學<span class="en">（Abenomics）</span></span>」配合的超大規模 QQE（<span class="term">質化<span class="term">量化寬鬆<span class="en">（Quantitative Easing，縮寫 QE）</span></span><span class="en">（Qualitative and Quantitative Easing, <span class="abbr-term">QQE<span class="en">（Qualitative and Quantitative Easing，質化量化寬鬆）</span></span>）</span></span>）
+          </div>
+          <div class="timeline-item">
+            <div class="timeline-year">2016</div>
+            <span class="abbr-term">BOJ<span class="en">（Bank of Japan，日本銀行）</span></span> 實施「<span class="term">負利率<span class="en">（Negative Interest Rate）</span></span>（-0.1%）」＋ YCC（<span class="term">殖利率曲線控制<span class="en">（Yield Curve Control，縮寫 YCC）</span></span>），史無前例
+          </div>
+          <div class="timeline-item">
+            <div class="timeline-year">2024.03</div>
+            <span class="abbr-term">BOJ<span class="en">（Bank of Japan，日本銀行）</span></span> 結束<span class="term">負利率<span class="en">（Negative Interest Rate）</span></span>，升息至 0%～0.1%——長達 8 年<span class="term">負利率<span class="en">（Negative Interest Rate）</span></span>時代終結
+          </div>
+          <div class="timeline-item">
+            <div class="timeline-year">2024.07</div>
+            再升至 0.25%，引爆日圓套利平倉潮，全球股市大震
+          </div>
+          <div class="timeline-item">
+            <div class="timeline-year">2025-2026</div>
+            植田和男持續緩步升息，日債（<span class="abbr-term">JGB<span class="en">（Japanese Government Bond，日本公債）</span></span>）<span class="term">殖利率<span class="en">（Yield）</span></span>上升，全球資金流洗牌中
+          </div>
+        </div>
+        <div class="example">
+          <div class="example-label">🧊 <span class="term">通縮<span class="en">（Deflation）</span></span>比喻</div>
+          <p><span class="term">通縮<span class="en">（Deflation）</span></span>就像「明天會更便宜」的詛咒：你今天不想買電視，因為明年一定更便宜 → 廠商賣不出去、降價 → 員工薪水被砍 → 大家更不敢花錢 → 惡性循環。<span class="abbr-term">BOJ<span class="en">（Bank of Japan，日本銀行）</span></span> 為了打破這個循環，才走上超低利率之路。</p>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- YCC 深解 -->
+  <div class="level-block">
+    <div class="level-header">
+      <div class="level-dot dot-mid"></div>
+      <span class="level-label label-mid">中等</span>
+      <span class="level-title">YCC（<span class="term">殖利率曲線控制<span class="en">（Yield Curve Control，縮寫 YCC）</span></span>）：<span class="abbr-term">BOJ<span class="en">（Bank of Japan，日本銀行）</span></span> 最強也最危險的武器</span>
+    </div>
+
+    <div class="concept" onclick="toggleConcept(this)">
+      <div class="concept-head">
+        <div class="concept-name"><span class="concept-emoji">🎯</span><span class="abbr-term">YCC<span class="en">（Yield Curve Control，殖利率曲線控制）</span></span> 是什麼？<span class="abbr-term">BOJ<span class="en">（Bank of Japan，日本銀行）</span></span> 如何「釘住」利率？</div>
+        <span class="concept-toggle">+</span>
+      </div>
+      <div class="concept-body">
+        <p class="def">YCC（Yield Curve Control）= <span class="abbr-term">BOJ<span class="en">（Bank of Japan，日本銀行）</span></span> 承諾讓 10 年期日本公債（<span class="abbr-term">JGB<span class="en">（Japanese Government Bond，日本公債）</span></span>）<span class="term">殖利率<span class="en">（Yield）</span></span>維持在特定範圍。為此，它無限量買進日債，把<span class="term">殖利率<span class="en">（Yield）</span></span>壓住。</p>
+        <div class="monster-diagram">
+          <h3>🎯 <span class="abbr-term">YCC<span class="en">（Yield Curve Control，殖利率曲線控制）</span></span> 運作示意</h3>
+          <div class="flow">
+            <div class="flow-box"><span class="abbr-term">BOJ<span class="en">（Bank of Japan，日本銀行）</span></span> 宣布：10 年期 <span class="abbr-term">JGB<span class="en">（Japanese Government Bond，日本公債）</span></span> <span class="term">殖利率<span class="en">（Yield）</span></span>不超過 X%</div>
+            <div class="flow-arrow">↓</div>
+            <div class="flow-box">市場一旦賣債、<span class="term">殖利率<span class="en">（Yield）</span></span>要漲 → <span class="abbr-term">BOJ<span class="en">（Bank of Japan，日本銀行）</span></span> 立刻無限量買進</div>
+            <div class="flow-arrow">↓</div>
+            <div class="flow-box"><span class="term">殖利率<span class="en">（Yield）</span></span>被壓住，但 <span class="abbr-term">BOJ<span class="en">（Bank of Japan，日本銀行）</span></span> 持倉爆炸性膨脹</div>
+            <div class="flow-arrow">↓</div>
+            <div class="flow-box danger">副作用：<span class="abbr-term">BOJ<span class="en">（Bank of Japan，日本銀行）</span></span> 一度持有超過 50% 的日本公債市場！</div>
+          </div>
+        </div>
+        <div class="example">
+          <div class="example-label">🏊 比喻</div>
+          <p><span class="abbr-term">YCC<span class="en">（Yield Curve Control，殖利率曲線控制）</span></span> 就像 <span class="abbr-term">BOJ<span class="en">（Bank of Japan，日本銀行）</span></span> 站在游泳池邊說「水位不准超過 1 公尺」，只要水位要漲，<span class="abbr-term">BOJ<span class="en">（Bank of Japan，日本銀行）</span></span> 就自己去舀水——結果 <span class="abbr-term">BOJ<span class="en">（Bank of Japan，日本銀行）</span></span> 自己舀了超過一半的水，成為整個游泳池最大的「水桶持有者」。</p>
+        </div>
+        <table>
+          <tr><th><span class="abbr-term">YCC<span class="en">（Yield Curve Control，殖利率曲線控制）</span></span> 年份</th><th>目標<span class="term">殖利率<span class="en">（Yield）</span></span>上限</th><th>說明</th></tr>
+          <tr><td>2016-2021</td><td>0% ± 0.1%</td><td>初期，幾乎釘死</td></tr>
+          <tr><td>2022.12</td><td>擴大至 ± 0.25% → 0.5%</td><td>市場壓力首次讓步</td></tr>
+          <tr><td>2023.07</td><td>「參考上限」改為 1%</td><td>開始鬆綁</td></tr>
+          <tr><td>2024.03</td><td>正式廢除 <span class="abbr-term">YCC<span class="en">（Yield Curve Control，殖利率曲線控制）</span></span></td><td>宣告超寬鬆時代結束</td></tr>
+        </table>
+      </div>
+    </div>
+
+    <div class="concept" onclick="toggleConcept(this)">
+      <div class="concept-head">
+        <div class="concept-name"><span class="concept-emoji">💣</span><span class="abbr-term">YCC<span class="en">（Yield Curve Control，殖利率曲線控制）</span></span> 放棄後，為何全球都要緊張？</div>
+        <span class="concept-toggle">+</span>
+      </div>
+      <div class="concept-body">
+        <p class="def"><span class="abbr-term">YCC<span class="en">（Yield Curve Control，殖利率曲線控制）</span></span> 存在時，日本利率被人工壓低，全球借日圓套利的錢可以穩定運作。<span class="abbr-term">YCC<span class="en">（Yield Curve Control，殖利率曲線控制）</span></span> 一旦放棄，日圓利率自由浮動，所有建立在「日本利率永遠低」假設上的投資部位，都要重新計算。</p>
+        <div class="keypoint">
+          <span class="keypoint-icon">🌊</span>
+          <span>估計全球<span class="term">日圓<span class="term">套利交易<span class="en">（Carry Trade，即利差交易）</span></span></span></span>規模超過 4 兆美元。即使只有一部分平倉，衝擊就已經夠大——2024 年 8 月的全球股災就是前車之鑑。</span>
+        </div>
+        <div class="news-connect">
+          <strong>📰 與今日新聞的連結</strong>
+          日銀升息 → <span class="abbr-term">YCC<span class="en">（Yield Curve Control，殖利率曲線控制）</span></span> 終結 → 日本機構開始「賣美債、買日債」→ 美債多了一個拋售來源 → 美債<span class="term">殖利率<span class="en">（Yield）</span></span>上升壓力加大 → <span class="term">凸性怪獸<span class="en">（Convexity Monster）</span></span>面對的環境更惡化。這是今天那篇鉅亨文章背後，被低調提到的那層因素。
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- QQE 進階 -->
+  <div class="level-block">
+    <div class="level-header">
+      <div class="level-dot dot-hard"></div>
+      <span class="level-label label-hard">進階</span>
+      <span class="level-title"><span class="abbr-term">BOJ<span class="en">（Bank of Japan，日本銀行）</span></span> 的<span class="term">資產負債表<span class="en">（Balance Sheet）</span></span>大擴張：買了什麼？後果是什麼？</span>
+    </div>
+
+    <div class="concept" onclick="toggleConcept(this)">
+      <div class="concept-head">
+        <div class="concept-name"><span class="concept-emoji">📊</span><span class="abbr-term">BOJ<span class="en">（Bank of Japan，日本銀行）</span></span> 甚至在買股票 <span class="abbr-term">ETF<span class="en">（Exchange-Traded Fund，指數股票型基金）</span></span>——前所未有的央行操作</div>
+        <span class="concept-toggle">+</span>
+      </div>
+      <div class="concept-body">
+        <p class="def"><span class="abbr-term">BOJ<span class="en">（Bank of Japan，日本銀行）</span></span> 的 <span class="abbr-term">QQE<span class="en">（Qualitative and Quantitative Easing，質化量化寬鬆）</span></span> 不只買國債，還直接買入日本股票 <span class="abbr-term">ETF<span class="en">（Exchange-Traded Fund，指數股票型基金）</span></span> 和 J-REIT（房地產信託），成為日本最大的股東之一。這在全球主要央行中是極為罕見的操作。</p>
+        <table>
+          <tr><th><span class="abbr-term">BOJ<span class="en">（Bank of Japan，日本銀行）</span></span> 購買的資產</th><th>峰值規模</th><th>特殊意義</th></tr>
+          <tr><td>日本政府公債（<span class="abbr-term">JGB<span class="en">（Japanese Government Bond，日本公債）</span></span>）</td><td>超過 600 兆日圓</td><td>占整個 <span class="abbr-term">JGB<span class="en">（Japanese Government Bond，日本公債）</span></span> 市場 50%+</td></tr>
+          <tr><td>日本股票 <span class="abbr-term">ETF<span class="en">（Exchange-Traded Fund，指數股票型基金）</span></span></td><td>約 37 兆日圓</td><td>一度是日本 70% 上市公司的前十大股東</td></tr>
+          <tr><td>J-<span class="abbr-term">REIT<span class="en">（Real Estate Investment Trust，不動產投資信託）</span></span></td><td>約 0.7 兆日圓</td><td>穩定房地產市場</td></tr>
+        </table>
+        <div class="example">
+          <div class="example-label">🤯 細思極恐的例子</div>
+          <p><span class="abbr-term">BOJ<span class="en">（Bank of Japan，日本銀行）</span></span> 買了這麼多 <span class="abbr-term">ETF<span class="en">（Exchange-Traded Fund，指數股票型基金）</span></span>，等於整個「日本政府的銀行」變成日本最大股東——每次日股下跌，<span class="abbr-term">BOJ<span class="en">（Bank of Japan，日本銀行）</span></span> 手上的資產都在虧損。但如果 <span class="abbr-term">BOJ<span class="en">（Bank of Japan，日本銀行）</span></span> 賣股票，市場就崩，所以它被困住了。這叫「央行被市場綁架」。</p>
+        </div>
+        <div class="keypoint">
+          <span class="keypoint-icon">🚪</span>
+          <span>2024 年起，<span class="abbr-term">BOJ<span class="en">（Bank of Japan，日本銀行）</span></span> 宣布停止購買 <span class="abbr-term">ETF<span class="en">（Exchange-Traded Fund，指數股票型基金）</span></span>，但持有的龐大存量如何退出，仍是全球最大的「出口問題」之一。</span>
+        </div>
+      </div>
+    </div>
+
+    <div class="concept" onclick="toggleConcept(this)">
+      <div class="concept-head">
+        <div class="concept-name"><span class="concept-emoji">🔭</span><span class="abbr-term">BOJ<span class="en">（Bank of Japan，日本銀行）</span></span> 升息的兩難：升太快全球崩、升太慢通膨來</div>
+        <span class="concept-toggle">+</span>
+      </div>
+      <div class="concept-body">
+        <p class="def">植田和男面臨一個超困難的局面：日本終於出現通膨（好事），應該升息正常化；但一升太快，就會引爆全球最大的<span class="term">套利交易<span class="en">（Carry Trade，即利差交易）</span></span></span>平倉潮，傷害全球金融穩定。</p>
+        <div class="monster-diagram">
+          <h3>⚖️ <span class="abbr-term">BOJ<span class="en">（Bank of Japan，日本銀行）</span></span> 升息的兩難困境</h3>
+          <div style="display:grid;grid-template-columns:1fr 1fr;gap:16px;text-align:left;margin-top:8px">
+            <div style="background:#f0fdf4;border:1px solid #86efac;padding:14px;border-radius:4px">
+              <div style="color:#15803d;font-size:11px;font-family:'JetBrains Mono',monospace;font-weight:700;margin-bottom:8px">升息太慢的後果</div>
+              <div style="font-size:13px;line-height:1.8">・日圓繼續貶值<br>・進口通膨加劇<br>・民眾購買力下降<br>・<span class="abbr-term">BOJ<span class="en">（Bank of Japan，日本銀行）</span></span> 公信力受損</div>
+            </div>
+            <div style="background:#fff5f5;border:1px solid #fca5a5;padding:14px;border-radius:4px">
+              <div style="color:#b91c1c;font-size:11px;font-family:'JetBrains Mono',monospace;font-weight:700;margin-bottom:8px">升息太快的後果</div>
+              <div style="font-size:13px;line-height:1.8">・<span class="term">套利交易<span class="en">（Carry Trade，即利差交易）</span></span></span>全面平倉<br>・全球股市崩盤風險<br>・日企債務壓力大增<br>・房市降溫，日本內需受傷</div>
+            </div>
+          </div>
+        </div>
+        <div class="keypoint">
+          <span class="keypoint-icon">🎻</span>
+          <span><span class="abbr-term">BOJ<span class="en">（Bank of Japan，日本銀行）</span></span> 現在的策略是「龜速升息」：每次只升一點點，同時密切觀察市場反應，讓套利資金有時間慢慢退出，而不是全部同時衝出門。</span>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- 學生深潛 BOJ -->
+  <div class="level-block">
+    <div class="level-header">
+      <div class="level-dot dot-expert"></div>
+      <span class="level-label label-expert">深潛</span>
+      <span class="level-title"><span class="abbr-term">BOJ<span class="en">（Bank of Japan，日本銀行）</span></span> 的<span class="term">貨幣政策<span class="en">（Monetary Policy）</span></span>框架：學術層面</span>
+    </div>
+
+    <div class="concept" onclick="toggleConcept(this)">
+      <div class="concept-head">
+        <div class="concept-name"><span class="concept-emoji">📚</span><span class="abbr-term">QQE<span class="en">（Qualitative and Quantitative Easing，質化量化寬鬆）</span></span>、<span class="abbr-term">NIRP<span class="en">（Negative Interest Rate Policy，負利率政策）</span></span>、<span class="abbr-term">YCC<span class="en">（Yield Curve Control，殖利率曲線控制）</span></span> 的正式定義與差異</div>
+        <span class="concept-toggle">+</span>
+      </div>
+      <div class="concept-body">
+        <table>
+          <tr><th>縮寫</th><th>全名</th><th>機制</th><th>主要效果</th></tr>
+          <tr><td><span class="abbr-term">QQE<span class="en">（Qualitative and Quantitative Easing，質化量化寬鬆）</span></span></td><td>Qualitative and Quantitative Easing<br><span class="term">質化<span class="term">量化寬鬆<span class="en">（Quantitative Easing，縮寫 QE）</span></span><span class="en">（Qualitative and Quantitative Easing, <span class="abbr-term">QQE<span class="en">（Qualitative and Quantitative Easing，質化量化寬鬆）</span></span>）</span></span></td><td>大量買入 <span class="abbr-term">JGB<span class="en">（Japanese Government Bond，日本公債）</span></span>、<span class="abbr-term">ETF<span class="en">（Exchange-Traded Fund，指數股票型基金）</span></span>、J-<span class="abbr-term">REIT<span class="en">（Real Estate Investment Trust，不動產投資信託）</span></span>，擴大貨幣基數</td><td>壓低長期利率、提振資產價格</td></tr>
+          <tr><td><span class="abbr-term">NIRP<span class="en">（Negative Interest Rate Policy，負利率政策）</span></span></td><td>Negative Interest Rate Policy<br><span class="term">負利率政策<span class="en">（Negative Interest Rate Policy，縮寫 NIRP）</span></span></span></td><td>銀行在 <span class="abbr-term">BOJ<span class="en">（Bank of Japan，日本銀行）</span></span> 超額準備存款利率設為 -0.1%</td><td>逼銀行放貸、不囤現金</td></tr>
+          <tr><td><span class="abbr-term">YCC<span class="en">（Yield Curve Control，殖利率曲線控制）</span></span></td><td>Yield Curve Control<br><span class="term">殖利率曲線控制<span class="en">（Yield Curve Control，縮寫 YCC）</span></span></td><td>釘住 10 年期 <span class="abbr-term">JGB<span class="en">（Japanese Government Bond，日本公債）</span></span> <span class="term">殖利率<span class="en">（Yield）</span></span>目標，無限量操作</td><td>直接管理長短期利率差，壓低借貸成本</td></tr>
+          <tr><td>Forward Guidance</td><td>前瞻性指引</td><td><span class="abbr-term">BOJ<span class="en">（Bank of Japan，日本銀行）</span></span> 承諾「在通膨超過 2% 之前不升息」</td><td>穩定市場預期、降低不確定性</td></tr>
+        </table>
+        <div class="formula">
+          <span class="abbr-term">BOJ<span class="en">（Bank of Japan，日本銀行）</span></span> 政策利率傳導鏈：<br>
+          <span class="abbr-term">BOJ<span class="en">（Bank of Japan，日本銀行）</span></span> 短期利率 → 銀行間拆借利率（<span class="abbr-term">TONAR<span class="en">（Tokyo Overnight Average Rate，東京隔夜平均利率）</span></span>）<br>
+          <span>→</span> 企業貸款利率 → 投資與消費<br>
+          <span>→</span> 日圓匯率 → 出口競爭力 → 通膨
+        </div>
+        <div class="keypoint">
+          <span class="keypoint-icon">🎓</span>
+          <span><span class="abbr-term">BOJ<span class="en">（Bank of Japan，日本銀行）</span></span> 是「非傳統<span class="term">貨幣政策<span class="en">（Monetary Policy）</span></span>（Unconventional Monetary Policy）」的最極端實踐者，是財金研究所的經典個案。植田和男本身是東京大學宏觀經濟學教授，他接任後的政策正常化路徑，是現在學術界和業界都高度關注的研究題材。</span>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+  <!-- BOJ 歷史故事 -->
+  <div class="level-block">
+    <div class="level-header">
+      <div class="level-dot dot-mid"></div>
+      <span class="level-label label-mid">中等</span>
+      <span class="level-title">📖 <span class="abbr-term">BOJ<span class="en">（Bank of Japan，日本銀行）</span></span> 140 年故事：從帝國銀行到全球最奇特的央行</span>
+    </div>
+
+    <div class="concept" onclick="toggleConcept(this)">
+      <div class="concept-head">
+        <div class="concept-name"><span class="concept-emoji">🏯</span>1882 年：明治維新的產物——<span class="abbr-term">BOJ<span class="en">（Bank of Japan，日本銀行）</span></span> 的誕生</div>
+        <span class="concept-toggle">+</span>
+      </div>
+      <div class="concept-body">
+        <p class="def">日本銀行成立於 1882 年，是明治政府現代化改革的一部分。當時日本師法西方，參考比利時中央銀行的模式，建立統一的發鈔與金融管理機構，目標是讓日本能在國際金融體系裡佔有一席之地。</p>
+        <div class="example">
+          <div class="example-label">📜 故事現場</div>
+          <p>1882 年 <span class="abbr-term">BOJ<span class="en">（Bank of Japan，日本銀行）</span></span> 成立時，日本才脫離幕府封建制度不到 15 年。年輕的官僚們穿著西裝，在東京日本橋的新辦公室裡，模仿歐洲金融機構的制度——一邊學英文財務術語，一邊制訂日本第一套<span class="term">貨幣政策<span class="en">（Monetary Policy）</span></span>框架。從那一刻起，日本踏上了「用<span class="term">貨幣政策<span class="en">（Monetary Policy）</span></span>追趕西方」的漫長旅程。</p>
+        </div>
+        <div class="timeline">
+          <div class="timeline-item">
+            <div class="timeline-year">1882</div>
+            日本銀行成立，開始統一發行紙幣，終結各地混亂的貨幣局面
+          </div>
+          <div class="timeline-item">
+            <div class="timeline-year">1897</div>
+            日本加入<span class="term">金本位<span class="en">（Gold Standard）</span></span>制，日圓正式與黃金掛鉤，獲得國際認可
+          </div>
+          <div class="timeline-item">
+            <div class="timeline-year">1930 年代</div>
+            軍國主義時期，<span class="abbr-term">BOJ<span class="en">（Bank of Japan，日本銀行）</span></span> 被迫為戰爭融資，大量印鈔，埋下二戰後<span class="term">惡性通膨<span class="en">（Hyperinflation）</span></span>種子
+          </div>
+          <div class="timeline-item">
+            <div class="timeline-year">1945-1949</div>
+            二戰結束，<span class="term">惡性通膨<span class="en">（Hyperinflation）</span></span>（物價漲數百倍），美軍占領期間推動「道奇計畫」，強制財政紀律，通膨才被壓制
+          </div>
+          <div class="timeline-item">
+            <div class="timeline-year">1949</div>
+            美元兌日圓固定在 360 圓，日本進入戰後高速成長期
+          </div>
+          <div class="timeline-item">
+            <div class="timeline-year">1973</div>
+            <span class="term">布列敦森林體系<span class="en">（Bretton Woods System）</span></span>崩潰，日圓改為浮動匯率。<span class="abbr-term">BOJ<span class="en">（Bank of Japan，日本銀行）</span></span> 正式進入現代<span class="term">貨幣政策<span class="en">（Monetary Policy）</span></span>時代
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="concept" onclick="toggleConcept(this)">
+      <div class="concept-head">
+        <div class="concept-name"><span class="concept-emoji">🦸</span>黑田東彥的「大砲」：史上最激進的 <span class="abbr-term">QE<span class="en">（Quantitative Easing，量化寬鬆）</span></span>，豪賭一場</div>
+        <span class="concept-toggle">+</span>
+      </div>
+      <div class="concept-body">
+        <p class="def">2013 年，安倍晉三重新執政，任命黑田東彥擔任 <span class="abbr-term">BOJ<span class="en">（Bank of Japan，日本銀行）</span></span> 總裁。黑田在記者會上宣布的政策震驚全球：「我們要把貨幣基數加倍，在兩年內實現 2% 通膨目標。」這是日本央行史上最激進的<span class="term">貨幣政策<span class="en">（Monetary Policy）</span></span>宣言。</p>
+        <div class="example">
+          <div class="example-label">💥 故事現場：「黑田火箭砲」</div>
+          <p>2013 年 4 月 4 日，黑田主持第一次 <span class="abbr-term">BOJ<span class="en">（Bank of Japan，日本銀行）</span></span> 政策會議。他宣布的 <span class="abbr-term">QQE<span class="en">（Qualitative and Quantitative Easing，質化量化寬鬆）</span></span> 規模，相當於每個月買入相當於 <span class="abbr-term">GDP<span class="en">（Gross Domestic Product，國內生產毛額）</span></span> 1% 的資產——換算成比例，比當時 Fed 的 <span class="abbr-term">QE<span class="en">（Quantitative Easing，量化寬鬆）</span></span> 還要大。市場反應：日圓當日貶值超過 3%，日本股市單日大漲 2.2%。媒體稱這天為「黑田衝擊（Kuroda Shock）」。</p>
+        </div>
+        <div class="keypoint">
+          <span class="keypoint-icon">🎲</span>
+          <span>黑田的豪賭：他相信，只要讓大家「相信通膨會來」，通膨就真的會來（預期心理的力量）。這個理論在學術上有依據，但現實中花了近十年才勉強讓通膨超過 2%——而且是靠外部衝擊（疫情、烏俄戰爭推升能源價格），而非政策本身。</span>
+        </div>
+      </div>
+    </div>
+
+    <div class="concept" onclick="toggleConcept(this)">
+      <div class="concept-head">
+        <div class="concept-name"><span class="concept-emoji">🔄</span>植田和男接棒：學者出身的「拆彈專家」</div>
+        <span class="concept-toggle">+</span>
+      </div>
+      <div class="concept-body">
+        <p class="def">2023 年 4 月，植田和男接替黑田，成為第 32 任 <span class="abbr-term">BOJ<span class="en">（Bank of Japan，日本銀行）</span></span> 總裁——也是二戰後首位非官僚出身、以學者身份擔任此職的總裁。他面對的是黑田留下的一個龐大、複雜、難以拆除的政策遺產。</p>
+        <div class="example">
+          <div class="example-label">🧨 故事現場：繼承了一個定時炸彈</div>
+          <p>植田接任時，<span class="abbr-term">BOJ<span class="en">（Bank of Japan，日本銀行）</span></span> 持有超過 50% 的日本公債、數十兆日圓的股票 <span class="abbr-term">ETF<span class="en">（Exchange-Traded Fund，指數股票型基金）</span></span>，帳面上已有龐大<span class="term">未實現虧損<span class="en">（Unrealized Loss）</span></span>。就好像接手一家已經堆滿高利貸的公司，每一個動作都可能讓整座大樓倒塌。他在就任記者會上罕見地說：「我們需要的，是耐心。」</p>
+        </div>
+        <div class="timeline">
+          <div class="timeline-item">
+            <div class="timeline-year">2023.04</div>
+            植田和男就任，維持超寬鬆政策不變，市場略感失望
+          </div>
+          <div class="timeline-item">
+            <div class="timeline-year">2023.07</div>
+            首次鬆動 <span class="abbr-term">YCC<span class="en">（Yield Curve Control，殖利率曲線控制）</span></span>，將 10 年期上限從 0.5% 改為「參考值」1%
+          </div>
+          <div class="timeline-item">
+            <div class="timeline-year">2024.03</div>
+            正式結束<span class="term">負利率<span class="en">（Negative Interest Rate）</span></span>（升至 0~0.1%），廢除 <span class="abbr-term">YCC<span class="en">（Yield Curve Control，殖利率曲線控制）</span></span>——8 年超寬鬆時代終結
+          </div>
+          <div class="timeline-item">
+            <div class="timeline-year">2024.07</div>
+            再升息至 0.25%，引爆全球股市崩盤，<span class="abbr-term">BOJ<span class="en">（Bank of Japan，日本銀行）</span></span> 被迫放緩腳步
+          </div>
+          <div class="timeline-item">
+            <div class="timeline-year">2025-2026</div>
+            龜速升息中，市場每次 <span class="abbr-term">BOJ<span class="en">（Bank of Japan，日本銀行）</span></span> 會議前都高度緊張
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- BOJ 隱藏問題 -->
+  <div class="level-block">
+    <div class="level-header">
+      <div class="level-dot dot-expert"></div>
+      <span class="level-label label-expert">深潛</span>
+      <span class="level-title">⚠️ <span class="abbr-term">BOJ<span class="en">（Bank of Japan，日本銀行）</span></span> 的隱藏地雷：退出策略根本沒有標準答案</span>
+    </div>
+
+    <div class="concept" onclick="toggleConcept(this)">
+      <div class="concept-head">
+        <div class="concept-name"><span class="concept-emoji">🗡️</span>隱藏問題①：<span class="abbr-term">BOJ<span class="en">（Bank of Japan，日本銀行）</span></span> 持有日債超過 50%——它賣不掉</div>
+        <span class="concept-toggle">+</span>
+      </div>
+      <div class="concept-body">
+        <p class="def"><span class="abbr-term">BOJ<span class="en">（Bank of Japan，日本銀行）</span></span> 十多年來不斷買進日本公債，一度持有整個市場超過 54%。現在問題來了：它想「退出」、讓市場正常運作，但只要它一開始大量賣，日債<span class="term">殖利率<span class="en">（Yield）</span></span>就會暴衝，讓日本政府利息支出炸裂。</p>
+        <div class="example">
+          <div class="example-label">🏊 比喻</div>
+          <p><span class="abbr-term">BOJ<span class="en">（Bank of Japan，日本銀行）</span></span> 是游泳池裡體積最大的人，佔了一半以上的水。它想爬出去（退出 <span class="abbr-term">QE<span class="en">（Quantitative Easing，量化寬鬆）</span></span>），但一爬出來水位就大跌（<span class="term">殖利率<span class="en">（Yield）</span></span>暴升），把剩下的人都嗆到——它被困在游泳池裡出不去。</p>
+        </div>
+        <div class="keypoint">
+          <span class="keypoint-icon">🔒</span>
+          <span>學術上叫「央行被動員過度（Over-commitment）」——當央行的持倉規模大到市場依賴它，它的「退出」本身就是系統風險。這是 <span class="abbr-term">BOJ<span class="en">（Bank of Japan，日本銀行）</span></span> 留給全球財金學界最大的研究課題之一。</span>
+        </div>
+      </div>
+    </div>
+
+    <div class="concept" onclick="toggleConcept(this)">
+      <div class="concept-head">
+        <div class="concept-name"><span class="concept-emoji">📉</span>隱藏問題②：<span class="abbr-term">BOJ<span class="en">（Bank of Japan，日本銀行）</span></span> 的<span class="term">資產負債表<span class="en">（Balance Sheet）</span></span>上有巨額<span class="term">未實現虧損<span class="en">（Unrealized Loss）</span></span></div>
+        <span class="concept-toggle">+</span>
+      </div>
+      <div class="concept-body">
+        <p class="def"><span class="abbr-term">BOJ<span class="en">（Bank of Japan，日本銀行）</span></span> 當初用低<span class="term">殖利率<span class="en">（Yield）</span></span>時期大量買債（高價買入），現在<span class="term">殖利率<span class="en">（Yield）</span></span>上升（債券價格下跌），<span class="abbr-term">BOJ<span class="en">（Bank of Japan，日本銀行）</span></span> 手上的債券帳面大幅虧損。雖然央行理論上不會「破產」，但這個虧損有政治和公信力的風險。</p>
+        <div class="formula">
+          簡單邏輯：<br>
+          <span class="abbr-term">BOJ<span class="en">（Bank of Japan，日本銀行）</span></span> 以 100 元買入債券（當時<span class="term">殖利率<span class="en">（Yield）</span></span> 0%）<br>
+          現在<span class="term">殖利率<span class="en">（Yield）</span></span>升至 1.5%，同張債市價剩 <span>約 82 元</span><br>
+          帳面虧損 18%<br>
+          <span class="abbr-term">BOJ<span class="en">（Bank of Japan，日本銀行）</span></span> 持有數百兆日圓規模 → <span><span class="term">未實現虧損<span class="en">（Unrealized Loss）</span></span>以兆計</span>
+        </div>
+        <div class="keypoint">
+          <span class="keypoint-icon">🏛️</span>
+          <span>中央銀行和一般銀行不同，它可以「忍受」帳面虧損因為它能自己印錢。但如果虧損太大、侵蝕到資本，需要政府「注資」，就會引發政治爭議和公信力危機——這是日本政府很不想面對的劇本。</span>
+        </div>
+      </div>
+    </div>
+
+    <div class="concept" onclick="toggleConcept(this)">
+      <div class="concept-head">
+        <div class="concept-name"><span class="concept-emoji">🎭</span>隱藏問題③：<span class="abbr-term">BOJ<span class="en">（Bank of Japan，日本銀行）</span></span> 的獨立性正在被政治侵蝕</div>
+        <span class="concept-toggle">+</span>
+      </div>
+      <div class="concept-body">
+        <p class="def">日本央行法定上獨立，但在<span class="term">安倍經濟學<span class="en">（Abenomics）</span></span>時代，政治對<span class="term">貨幣政策<span class="en">（Monetary Policy）</span></span>的干預達到前所未有的程度。植田和男接任後試圖找回獨立性，但政治壓力從未消失——尤其是在升息傷害經濟時。</p>
+        <div class="example">
+          <div class="example-label">⚖️ 2024 年的例子</div>
+          <p>2024 年 7 月，<span class="abbr-term">BOJ<span class="en">（Bank of Japan，日本銀行）</span></span> 升息到 0.25%，全球股市大跌、日本股市崩盤。日本政府官員公開「希望 <span class="abbr-term">BOJ<span class="en">（Bank of Japan，日本銀行）</span></span> 謹慎考慮市場狀況」——這是政治對央行政策的隱性干預。植田和男之後的記者會明顯趨於保守。</p>
+        </div>
+        <div class="keypoint">
+          <span class="keypoint-icon">🎓</span>
+          <span><span class="term">央行獨立性<span class="en">（Central Bank Independence）</span></span>（Central Bank Independence）是現代<span class="term">貨幣政策<span class="en">（Monetary Policy）</span></span>的基石。一旦政治力量能影響利率決策，市場就會懷疑「央行是否真的在控制通膨，還是只在保股市？」——這會讓<span class="term">通膨預期<span class="en">（Inflation Expectations）</span></span>失控，代價極大。</span>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- ===== 聯準會 FED ===== -->
+<div id="s7" class="section">
+  <div class="intro-strip">
+    <span class="icon">🏛️</span>
+    <span>美國聯準會（Fed）完全圖解｜全球最有權力的金融機構，一個決定影響全世界</span>
+  </div>
+
+  <!-- 機構介紹 -->
+  <div class="level-block">
+    <div class="level-header">
+      <div class="level-dot dot-easy"></div>
+      <span class="level-label label-easy">簡單</span>
+      <span class="level-title">Fed 是誰？怎麼運作？</span>
+    </div>
+
+    <div class="concept" onclick="toggleConcept(this)">
+      <div class="concept-head">
+        <div class="concept-name"><span class="concept-emoji">🏛️</span>聯準會（Federal Reserve）：美國央行，但不像一般央行</div>
+        <span class="concept-toggle">+</span>
+      </div>
+      <div class="concept-body">
+        <p class="def">Fed（Federal Reserve System，聯邦準備系統）成立於 1913 年。它是美國的中央銀行，但結構特殊：由 12 個地區聯邦準備銀行組成，最高決策機構是 FOMC（聯邦公開市場委員會）。</p>
+        <div class="japan-box" style="border-top-color:#003087">
+          <div class="japan-flag" style="color:#003087">🇺🇸 Fed 組織架構</div>
+          <div style="font-size:14px;line-height:2">
+            ・<strong>理事會（Board of Governors）</strong>：7 人，由美國總統提名、參議院批准，任期 14 年<br>
+            ・<strong><span class="abbr-term">FOMC<span class="en">（Federal Open Market Committee，聯邦公開市場委員會）</span></span></strong>：12 票決策——7 位理事 + 紐約 Fed 主席（常任）+ 其他 4 位地區主席輪流<br>
+            ・<strong>主席</strong>：鮑爾（Jerome Powell），2022 年連任，任期至 2026 年<br>
+            ・<strong>開會頻率</strong>：每年 8 次 <span class="abbr-term">FOMC<span class="en">（Federal Open Market Committee，聯邦公開市場委員會）</span></span> 會議，每次決定升降息
+          </div>
+        </div>
+        <div class="example">
+          <div class="example-label">🎭 比喻</div>
+          <p>如果美國經濟是一部電影，Fed 是導演：它設定整個故事的節奏（利率高低），但它不能逼演員（企業、消費者）照它說的做——只能透過「讓環境更貴或更便宜」來引導行為。</p>
+        </div>
+      </div>
+    </div>
+
+    <div class="concept" onclick="toggleConcept(this)">
+      <div class="concept-head">
+        <div class="concept-name"><span class="concept-emoji">⚖️</span>Fed 的「<span class="term">雙重任務<span class="en">（Dual Mandate）</span></span>」：物價穩定 ＋ 充分就業</div>
+        <span class="concept-toggle">+</span>
+      </div>
+      <div class="concept-body">
+        <p class="def">Fed 的法定任務是同時追求：① 物價穩定（通膨目標 2%）、② 最大就業（充分就業）。這兩個目標有時互相衝突。</p>
+        <div class="monster-diagram">
+          <h3>⚖️ Fed 的永恆拉鋸</h3>
+          <div style="display:grid;grid-template-columns:1fr 1fr;gap:16px;text-align:left;margin-top:8px">
+            <div style="background:#fff8f0;border:1px solid #fed7aa;padding:14px;border-radius:4px">
+              <div style="color:#c2410c;font-size:12px;font-family:'JetBrains Mono',monospace;font-weight:700;margin-bottom:8px">通膨太高 → 升息</div>
+              <div style="font-size:13px;line-height:1.8">借錢變貴<br>↓ 消費減少<br>↓ 企業裁員<br>↓ 失業率上升<br>↓ 物價降溫</div>
+            </div>
+            <div style="background:#f0fdf4;border:1px solid #86efac;padding:14px;border-radius:4px">
+              <div style="color:#15803d;font-size:12px;font-family:'JetBrains Mono',monospace;font-weight:700;margin-bottom:8px">就業太差 → 降息</div>
+              <div style="font-size:13px;line-height:1.8">借錢變便宜<br>↓ 企業擴張<br>↓ 雇用更多人<br>↓ 消費增加<br>↓ 有時帶來通膨</div>
+            </div>
+          </div>
+        </div>
+        <div class="example">
+          <div class="example-label">🩺 醫生比喻</div>
+          <p>Fed 是同時要控制病人「血壓（通膨）」和「心跳（就業）」的醫生——血壓藥（升息）會讓心跳變慢，強心針（降息）又會讓血壓升高。它必須找到剛好的劑量，這叫「<span class="term">軟著陸<span class="en">（Soft Landing）</span></span>（Soft Landing）」。</p>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Fed 工具箱 -->
+  <div class="level-block">
+    <div class="level-header">
+      <div class="level-dot dot-mid"></div>
+      <span class="level-label label-mid">中等</span>
+      <span class="level-title">Fed 的政策工具箱：不只有升降息</span>
+    </div>
+
+    <div class="concept" onclick="toggleConcept(this)">
+      <div class="concept-head">
+        <div class="concept-name"><span class="concept-emoji">🧰</span>Fed 的四大工具，一次搞懂</div>
+        <span class="concept-toggle">+</span>
+      </div>
+      <div class="concept-body">
+        <table>
+          <tr><th>工具</th><th>是什麼</th><th>效果</th></tr>
+          <tr><td><span class="term">聯邦基金利率<span class="en">（Federal Funds Rate）</span></span><br>（Federal Funds Rate）</td><td>銀行間隔夜拆借的基準利率</td><td>影響所有借貸成本的源頭</td></tr>
+          <tr><td><span class="term">量化寬鬆<span class="en">（Quantitative Easing，縮寫 QE）</span></span>（<span class="abbr-term">QE<span class="en">（Quantitative Easing，量化寬鬆）</span></span>）</td><td>Fed 直接買入美債＋<span class="abbr-term">MBS<span class="en">（Mortgage-Backed Securities，不動產抵押貸款證券）</span></span>，注入資金</td><td>壓低長期<span class="term">殖利率<span class="en">（Yield）</span></span>、寬鬆金融條件</td></tr>
+          <tr><td><span class="term">量化緊縮<span class="en">（Quantitative Tightening，縮寫 QT）</span></span>（<span class="abbr-term">QT<span class="en">（Quantitative Tightening，量化緊縮）</span></span>）</td><td>讓資產到期不再買、縮減持倉</td><td>收回流動性、推升長期<span class="term">殖利率<span class="en">（Yield）</span></span></td></tr>
+          <tr><td><span class="term">前瞻指引<span class="en">（Forward Guidance）</span></span>（Forward Guidance）</td><td>透過聲明「預告」未來利率走向</td><td>用語言管理市場預期，不動刀也有效</td></tr>
+        </table>
+        <div class="example">
+          <div class="example-label">🎮 遊戲比喻</div>
+          <p><span class="term">聯邦基金利率<span class="en">（Federal Funds Rate）</span></span> = 遊戲的「難度調整」<br>
+          <span class="abbr-term">QE<span class="en">（Quantitative Easing，量化寬鬆）</span></span> = 系統直接給你補血包（市場流動性）<br>
+          <span class="abbr-term">QT<span class="en">（Quantitative Tightening，量化緊縮）</span></span> = 系統慢慢收回補血包<br>
+          <span class="term">前瞻指引<span class="en">（Forward Guidance）</span></span> = 遊戲給你提示「下一關更難」，讓你提前準備</p>
+        </div>
+      </div>
+    </div>
+
+    <div class="concept" onclick="toggleConcept(this)">
+      <div class="concept-head">
+        <div class="concept-name"><span class="concept-emoji">📅</span>2020-2026 Fed 政策大事紀</div>
+        <span class="concept-toggle">+</span>
+      </div>
+      <div class="concept-body">
+        <div class="timeline">
+          <div class="timeline-item">
+            <div class="timeline-year">2020.03</div>
+            疫情爆發，緊急降息至 0%，啟動史上最大規模 QE（月購 1200 億美元）
+          </div>
+          <div class="timeline-item">
+            <div class="timeline-year">2021</div>
+            通膨開始悄悄爬升，Fed 誤判為「暫時性」，繼續超寬鬆
+          </div>
+          <div class="timeline-item">
+            <div class="timeline-year">2022.03</div>
+            通膨飆至 40 年高點（9.1%），Fed 啟動「史上最激進升息」：連續四次升 3 碼（0.75%）
+          </div>
+          <div class="timeline-item">
+            <div class="timeline-year">2022.06</div>
+            同步啟動 QT（<span class="term">量化緊縮<span class="en">（Quantitative Tightening，縮寫 QT）</span></span>），每月讓約 950 億美元資產到期不續買
+          </div>
+          <div class="timeline-item">
+            <div class="timeline-year">2023.07</div>
+            升息至本輪峰值 5.25%-5.5%，為 2001 年以來最高
+          </div>
+          <div class="timeline-item">
+            <div class="timeline-year">2024.09</div>
+            首次降息（-0.5%），開啟降息周期
+          </div>
+          <div class="timeline-item">
+            <div class="timeline-year">2025-2026</div>
+            降息節奏放緩，通膨黏著（尤其關稅效應），市場預期 Fed 走走停停
+          </div>
+        </div>
+        <div class="news-connect">
+          <strong>📰 與今日新聞連結</strong>
+          <span class="abbr-term">QT<span class="en">（Quantitative Tightening，量化緊縮）</span></span> 的副作用正是今日文章的核心：Fed <span class="term">縮表<span class="en">（Balance Sheet Reduction）</span></span>讓它手上的 <span class="abbr-term">MBS<span class="en">（Mortgage-Backed Securities，不動產抵押貸款證券）</span></span> 減少（從 2.7 兆減少中），穩定市場的力量消失，填補的避險基金反而製造更多波動——<span class="term">凸性怪獸<span class="en">（Convexity Monster）</span></span>因此甦醒。
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- 升息傳導 -->
+  <div class="level-block">
+    <div class="level-header">
+      <div class="level-dot dot-hard"></div>
+      <span class="level-label label-hard">進階</span>
+      <span class="level-title">Fed 升息如何影響全球？台股又怎麼被拖著走？</span>
+    </div>
+
+    <div class="concept" onclick="toggleConcept(this)">
+      <div class="concept-head">
+        <div class="concept-name"><span class="concept-emoji">🌊</span>Fed 升息的全球傳導鏈，逐步拆解</div>
+        <span class="concept-toggle">+</span>
+      </div>
+      <div class="concept-body">
+        <div class="monster-diagram">
+          <h3>🌊 Fed 升息 → 台股的傳導路徑</h3>
+          <div class="flow">
+            <div class="flow-box">Fed 宣布升息</div>
+            <div class="flow-arrow">↓</div>
+            <div class="flow-box">美債<span class="term">殖利率<span class="en">（Yield）</span></span>上升（無風險報酬變高）</div>
+            <div class="flow-arrow">↓</div>
+            <div class="flow-box">外資重新計算「買台股值不值得」（機會成本上升）</div>
+            <div class="flow-arrow">↓</div>
+            <div class="flow-box">美元走強 → 新台幣貶值壓力</div>
+            <div class="flow-arrow">↓</div>
+            <div class="flow-box">外資賣台股、換回美元</div>
+            <div class="flow-arrow">↓</div>
+            <div class="flow-box danger">台股指數下跌，科技股首當其衝</div>
+          </div>
+        </div>
+        <div class="example">
+          <div class="example-label">🇹🇼 台積電（<span class="abbr-term">TSMC<span class="en">（Taiwan Semiconductor Manufacturing Company，台灣積體電路製造）</span></span>）的例子</div>
+          <p>2022 年 Fed 激進升息，台積電從 688 元高點跌到 370 元，跌幅約 46%——不是因為台積電變差，而是「美債<span class="term">殖利率<span class="en">（Yield）</span></span>高到讓外資覺得拿美債比台股值得」。這就是利率的估值壓縮效應。</p>
+        </div>
+        <table>
+          <tr><th>Fed 動作</th><th>台股外資</th><th>台幣匯率</th><th>半導體股</th></tr>
+          <tr><td>升息（Hawkish）</td><td>賣出、流出</td><td>貶值壓力</td><td>本益比壓縮、跌</td></tr>
+          <tr><td>降息（Dovish）</td><td>買入、流入</td><td>升值傾向</td><td>估值回升、漲</td></tr>
+          <tr><td>暫停升息</td><td>觀望</td><td>相對穩定</td><td>視財報而定</td></tr>
+        </table>
+      </div>
+    </div>
+
+    <div class="concept" onclick="toggleConcept(this)">
+      <div class="concept-head">
+        <div class="concept-name"><span class="concept-emoji">🔮</span>Fed 的「<span class="term">鷹派<span class="en">（Hawkish）</span></span> vs <span class="term">鴿派<span class="en">（Dovish）</span></span>」：你在新聞裡常看到的詞</div>
+        <span class="concept-toggle">+</span>
+      </div>
+      <div class="concept-body">
+        <p class="def">看財經新聞常見「<span class="term">鷹派<span class="en">（Hawkish）</span></span>」、「<span class="term">鴿派<span class="en">（Dovish）</span></span>」——這是形容 Fed 官員對利率政策的傾向。</p>
+        <table>
+          <tr><th></th><th>🦅 <span class="term">鷹派<span class="en">（Hawkish）</span></span>（Hawkish）</th><th>🕊️ <span class="term">鴿派<span class="en">（Dovish）</span></span>（Dovish）</th></tr>
+          <tr><td>優先考量</td><td>打壓通膨</td><td>保護就業</td></tr>
+          <tr><td>偏好政策</td><td>升息、維持高利率</td><td>降息、維持寬鬆</td></tr>
+          <tr><td>對股市影響</td><td>利空（借錢貴）</td><td>利多（借錢便宜）</td></tr>
+          <tr><td>代表人物</td><td>Waller、Barkin</td><td>Daly、Williams</td></tr>
+        </table>
+        <div class="example">
+          <div class="example-label">🦅🕊️ 比喻</div>
+          <p><span class="term">鷹派<span class="en">（Hawkish）</span></span> = 嚴格的父母：「你不念書就不給零用錢！」（不降息）<br>
+          <span class="term">鴿派<span class="en">（Dovish）</span></span> = 溺愛的父母：「沒關係，先給你錢，慢慢來。」（降息）<br>
+          <span class="abbr-term">FOMC<span class="en">（Federal Open Market Committee，聯邦公開市場委員會）</span></span> 開會就是這兩派在投票吵架，最後取得共識。</p>
+        </div>
+        <div class="keypoint">
+          <span class="keypoint-icon">📡</span>
+          <span>看新聞技巧：每次 <span class="abbr-term">FOMC<span class="en">（Federal Open Market Committee，聯邦公開市場委員會）</span></span> 會後聲明和主席記者會，看「<span class="term">點陣圖<span class="en">（Dot Plot）</span></span>（Dot Plot）」——這是 Fed 官員對未來利率的預測，影響力巨大，直接讓市場大幅波動。</span>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- 深潛 Fed -->
+  <div class="level-block">
+    <div class="level-header">
+      <div class="level-dot dot-expert"></div>
+      <span class="level-label label-expert">深潛</span>
+      <span class="level-title"><span class="term">貨幣政策<span class="en">（Monetary Policy）</span></span>框架：Fed 怎麼思考利率決策？</span>
+    </div>
+
+    <div class="concept" onclick="toggleConcept(this)">
+      <div class="concept-head">
+        <div class="concept-name"><span class="concept-emoji">🧮</span><span class="term">泰勒法則<span class="en">（Taylor Rule）</span></span>（Taylor Rule）：Fed 升息的「數學依據」</div>
+        <span class="concept-toggle">+</span>
+      </div>
+      <div class="concept-body">
+        <p class="def"><span class="term">泰勒法則<span class="en">（Taylor Rule）</span></span>（Taylor Rule）是經濟學家 John Taylor 在 1993 年提出的公式，用來估算「最適當的利率水準」，是 Fed 決策的重要參考框架（但不是唯一依據）。</p>
+        <div class="formula">
+          <span><span class="term">泰勒法則<span class="en">（Taylor Rule）</span></span>（簡化版）：</span><br><br>
+          目標利率 = <span class="term">中性利率<span class="en">（Neutral Rate / R*）</span></span><br>
+          　　　　　+ 1.5 × (通膨率 - 目標通膨 2%)<br>
+          　　　　　+ 0.5 × (實際 <span class="abbr-term">GDP<span class="en">（Gross Domestic Product，國內生產毛額）</span></span> 成長 - 潛在 <span class="abbr-term">GDP<span class="en">（Gross Domestic Product，國內生產毛額）</span></span> 成長)<br><br>
+          <span>→ 通膨每超標 1%，利率應升約 1.5%</span><br>
+          <span>→ 經濟每過熱 1%，利率應升約 0.5%</span>
+        </div>
+        <div class="example">
+          <div class="example-label">📊 2022 年的例子</div>
+          <p>2022 年美國通膨 9.1%（超標 7.1%），<span class="term">泰勒法則<span class="en">（Taylor Rule）</span></span>暗示利率應在 10%+ 。Fed 最終只升到 5.5%，算是「有所保留」——但已是幾十年來最激進的一輪。</p>
+        </div>
+      </div>
+    </div>
+
+    <div class="concept" onclick="toggleConcept(this)">
+      <div class="concept-head">
+        <div class="concept-name"><span class="concept-emoji">📐</span>R*（<span class="term">中性利率<span class="en">（Neutral Rate / R*）</span></span>）：Fed 最難定義的目標</div>
+        <span class="concept-toggle">+</span>
+      </div>
+      <div class="concept-body">
+        <p class="def">R*（讀作 "R-star"）= <span class="term">中性利率<span class="en">（Neutral Rate / R*）</span></span>，是「既不刺激也不緊縮經濟」的理想利率水準。問題是沒人知道它到底在哪裡——Fed 只能不斷猜測和修正。</p>
+        <div class="formula">
+          若 實際利率 &gt; R*  →  <span>緊縮性政策</span>（踩煞車）<br>
+          若 實際利率 &lt; R*  →  <span>寬鬆性政策</span>（踩油門）<br>
+          若 實際利率 ≈ R*  →  中性政策（巡航速度）
+        </div>
+        <div class="keypoint">
+          <span class="keypoint-icon">🎓</span>
+          <span>現在學術界和業界爭論的核心問題之一：R* 是否因 AI 投資潮、去全球化、人口老化等結構因素，永久性地上移了？如果是，Fed 以為現在 5% 很緊縮，其實可能只是中性——這對長期<span class="term">殖利率<span class="en">（Yield）</span></span>有深遠影響。</span>
+        </div>
+      </div>
+    </div>
+
+    <div class="concept" onclick="toggleConcept(this)">
+      <div class="concept-head">
+        <div class="concept-name"><span class="concept-emoji">🕸️</span>Fed vs <span class="abbr-term">BOJ<span class="en">（Bank of Japan，日本銀行）</span></span>：同一時代的兩個極端，如何互相影響</div>
+        <span class="concept-toggle">+</span>
+      </div>
+      <div class="concept-body">
+        <p class="def">2022-2024 年，全球最奇特的現象：Fed 以「40 年最快速度升息」，<span class="abbr-term">BOJ<span class="en">（Bank of Japan，日本銀行）</span></span> 卻「40 年不動」——兩者政策南轅北轍，製造了巨大的套利空間，也埋下了後來市場的不穩定性。</p>
+        <div class="monster-diagram">
+          <h3>🌏 Fed vs <span class="abbr-term">BOJ<span class="en">（Bank of Japan，日本銀行）</span></span>：利差撕裂全球資本</h3>
+          <div style="text-align:left;font-size:13.5px;line-height:2">
+            <strong style="color:var(--accent)">2022-2023：</strong><br>
+            Fed 利率：0% → 5.5%（升了 5.5%）<br>
+            <span class="abbr-term">BOJ<span class="en">（Bank of Japan，日本銀行）</span></span> 利率：-0.1%（紋絲不動）<br>
+            利差：約 5.6% → 全球史上最大主要央行利差之一<br><br>
+            <strong style="color:#2c3e50">資金流向：</strong><br>
+            借日圓（0 成本）→ 換美元 → 買美債（5.5%）→ 白賺 5%+<br><br>
+            <div style="background:var(--accent);color:white;padding:10px 14px;border-radius:4px;font-weight:700">
+              結果：全球估計數兆美元<span class="term">日圓<span class="term">套利交易<span class="en">（Carry Trade，即利差交易）</span></span></span></span>形成 → 撐起了美債需求 → 但也埋下了 2024.08 的全球股災導火線
+            </div>
+          </div>
+        </div>
+        <div class="keypoint">
+          <span class="keypoint-icon">🇹🇼</span>
+          <span>對台灣的意義：這場 Fed vs <span class="abbr-term">BOJ<span class="en">（Bank of Japan，日本銀行）</span></span> 的政策分歧，是外資大量流入台股科技股的背景之一（錢太多找出路）。現在兩者政策漸趨收斂（Fed 降息、<span class="abbr-term">BOJ<span class="en">（Bank of Japan，日本銀行）</span></span> 升息），資金流向正在洗牌，台股外資動向要更謹慎追蹤。</span>
+        </div>
+      </div>
+    </div>
+  <!-- Fed 歷史故事 -->
+  <div class="level-block">
+    <div class="level-header">
+      <div class="level-dot dot-mid"></div>
+      <span class="level-label label-mid">中等</span>
+      <span class="level-title">📖 Fed 110 年故事：從金融恐慌的教訓，到全球最有權力的機構</span>
+    </div>
+
+    <div class="concept" onclick="toggleConcept(this)">
+      <div class="concept-head">
+        <div class="concept-name"><span class="concept-emoji">🚢</span>1910 年：傑基爾島的秘密會議——Fed 的誕生傳說</div>
+        <span class="concept-toggle">+</span>
+      </div>
+      <div class="concept-body">
+        <p class="def">1910 年 11 月，美國最有權勢的六位銀行家，偽裝成「鴨子獵人」，悄悄登上喬治亞州的傑基爾島（Jekyll Island）。他們在豪華度假村裡，秘密起草了美國中央銀行的雛形——聯邦準備法案。</p>
+        <div class="example">
+          <div class="example-label">🕵️ 故事現場：史上最神秘的金融密謀</div>
+          <p>參與者包括摩根大通的高管、洛克菲勒家族的銀行家，他們被指示「不准用真名」、「不准被人看到在一起」。為什麼這麼神秘？因為當時美國人民非常憎恨大銀行，任何「銀行家集體設計的中央銀行」都會被輿論摧毀。他們花了九天，在傑基爾島起草的草案，後來基本上成為 1913 年《聯邦準備法》的藍本。</p>
+        </div>
+        <div class="keypoint">
+          <span class="keypoint-icon">📚</span>
+          <span>為何需要 Fed？1907 年美國爆發嚴重銀行恐慌，整個金融體系差點崩潰，最後靠 J.P. Morgan 個人出面協調才救回。國會意識到「不能靠一個人來救市」，必須有制度性的中央銀行。</span>
+        </div>
+      </div>
+    </div>
+
+    <div class="concept" onclick="toggleConcept(this)">
+      <div class="concept-head">
+        <div class="concept-name"><span class="concept-emoji">📉</span>1929-1933 年：Fed 的大失誤——大蕭條是它「搞出來」的？</div>
+        <span class="concept-toggle">+</span>
+      </div>
+      <div class="concept-body">
+        <p class="def">經濟學家米爾頓‧傅利曼（Milton Friedman）的研究指出：大蕭條之所以那麼慘，Fed 要負很大責任——它在銀行大量倒閉時，不但沒有注入流動性，反而讓<span class="term">貨幣供給<span class="en">（Money Supply）</span></span>萎縮了 1/3。</p>
+        <div class="example">
+          <div class="example-label">😱 故事現場：銀行擠兌，Fed 袖手旁觀</div>
+          <p>1930-1933 年，超過 9,000 家美國銀行倒閉，存款人血本無歸。Fed 看著這一切，卻不伸援手——當時的 Fed 官員認為「讓弱者倒閉是市場的自然淘汰」。結果<span class="term">貨幣供給<span class="en">（Money Supply）</span></span>急速萎縮，<span class="term">通貨緊縮<span class="en">（Deflation）</span></span>加劇，失業率衝破 25%。這個教訓讓後來的 Fed 主席（包括柏南克）銘記於心：「下次不能再犯同樣的錯。」</p>
+        </div>
+        <div class="keypoint">
+          <span class="keypoint-icon">🎓</span>
+          <span>2002 年，時任 Fed 理事的柏南克（Ben Bernanke）在傅利曼 90 歲生日演講上說：「關於大蕭條，你是對的，我們做錯了。我們很抱歉。但多虧了你，我們不會再犯了。」六年後，2008 年<span class="term">金融海嘯<span class="en">（Global Financial Crisis）</span></span>，柏南克主導無限量 <span class="abbr-term">QE<span class="en">（Quantitative Easing，量化寬鬆）</span></span>，實踐了這個承諾。</span>
+        </div>
+      </div>
+    </div>
+
+    <div class="concept" onclick="toggleConcept(this)">
+      <div class="concept-head">
+        <div class="concept-name"><span class="concept-emoji">🦅</span>伏克爾時刻（1979-1987）：一個人用利率殺死通膨</div>
+        <span class="concept-toggle">+</span>
+      </div>
+      <div class="concept-body">
+        <p class="def">保羅‧伏克爾（Paul Volcker）是 Fed 歷史上最具爭議也最受尊崇的主席。他在通膨肆虐的 1979 年接任，做了一件讓全美國人痛苦的事——把利率升到 20%。</p>
+        <div class="example">
+          <div class="example-label">🚜 故事現場：農民把拖拉機開到 Fed 門口</div>
+          <p>1982 年，美國失業率高達 10.8%，房貸利率超過 18%。憤怒的農民開著拖拉機把 Fed 總部大樓包圍，高喊「伏克爾滾下台」。建築業工人把木材和磚塊寄到 Fed，象徵產業被高利率「封死」。但伏克爾頂住了政治壓力，堅持不降息——直到通膨從 14% 降到 3%。他說過一句話：「如果你不打倒通膨，它就會打倒你。」</p>
+        </div>
+        <div class="timeline">
+          <div class="timeline-item">
+            <div class="timeline-year">1979.08</div>
+            伏克爾接任，美國通膨率 11%，宣布「新<span class="term">貨幣政策<span class="en">（Monetary Policy）</span></span>框架」：優先控制<span class="term">貨幣供給<span class="en">（Money Supply）</span></span>量
+          </div>
+          <div class="timeline-item">
+            <div class="timeline-year">1981.06</div>
+            基準利率升至 20%——美國史上最高，也是近代主要央行最高紀錄
+          </div>
+          <div class="timeline-item">
+            <div class="timeline-year">1982</div>
+            美國陷入嚴重衰退，失業率 10.8%，政治壓力山大，但伏克爾拒絕降息
+          </div>
+          <div class="timeline-item">
+            <div class="timeline-year">1983</div>
+            通膨降至 3%，美國開始復甦。伏克爾奠定此後 40 年低通膨大環境
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="concept" onclick="toggleConcept(this)">
+      <div class="concept-head">
+        <div class="concept-name"><span class="concept-emoji">🚁</span>「直升機柏南克」：2008 <span class="term">金融海嘯<span class="en">（Global Financial Crisis）</span></span>，一個教科書案例活了</div>
+        <span class="concept-toggle">+</span>
+      </div>
+      <div class="concept-body">
+        <p class="def">班‧柏南克（Ben Bernanke）是研究大蕭條的頂尖學者，2006 年接任 Fed 主席。2008 年<span class="term">金融海嘯<span class="en">（Global Financial Crisis）</span></span>，他把自己的學術研究全部付諸實踐——「不能讓銀行倒閉，不能讓<span class="term">信用市場<span class="en">（Credit Market）</span></span>凍結」。</p>
+        <div class="example">
+          <div class="example-label">💊 故事現場：2008 年最後一道防線</div>
+          <p>2008 年 9 月 15 日，雷曼兄弟倒閉。隔天，AIG（全球最大保險公司）宣布需要緊急援助。財政部長鮑爾森和柏南克在白宮向國會領袖報告，鮑爾森說：「如果我們現在不行動，整個金融體系在週一早上可能就不存在了。」柏南克當場宣布：「Fed 會做任何必要的事。」此後 6 個月，Fed 推出史無前例的 <span class="abbr-term">QE<span class="en">（Quantitative Easing，量化寬鬆）</span></span>、直接買商業票據、拯救 <span class="abbr-term">AIG<span class="en">（American International Group，美國國際集團）</span></span>——把一個可能的「第二次大蕭條」硬生生擋了下來。柏南克在 2022 年獲得諾貝爾經濟學獎，部分原因就是這些研究和實踐。</p>
+        </div>
+        <div class="keypoint">
+          <span class="keypoint-icon">🚁</span>
+          <span>「直升機班（Helicopter Ben）」這個綽號，來自柏南克 2002 年的一段演講——他說若<span class="term">通縮<span class="en">（Deflation）</span></span>危及經濟，央行可以「用直升機撒錢」。這個比喻被大眾記住，諷刺地成了他的代號。</span>
+        </div>
+      </div>
+    </div>
+
+    <div class="concept" onclick="toggleConcept(this)">
+      <div class="concept-head">
+        <div class="concept-name"><span class="concept-emoji">🎯</span>2022-2023 年：鮑爾的升息競賽——40 年最激進，也最有爭議</div>
+        <span class="concept-toggle">+</span>
+      </div>
+      <div class="concept-body">
+        <p class="def">傑洛姆‧鮑爾（Jerome Powell）2022 年面對 40 年未見的通膨，採取了近代 Fed 最激進的升息路徑——僅 16 個月，利率從 0% 升至 5.5%。</p>
+        <div class="example">
+          <div class="example-label">⚡ 故事現場：鮑爾的傑克森霍爾宣言</div>
+          <p>2022 年 8 月，懷俄明州傑克森霍爾，全球央行年會。鮑爾走上講台，發表了近十年來 Fed 最<span class="term">鷹派<span class="en">（Hawkish）</span></span>的演講，只有 8 分鐘：「降低通膨需要一段時間維持緊縮政策。這個過程將會帶來痛苦，對家庭和企業都是。」他話一說完，美股當日暴跌 3%。市場終於相信：Fed 是認真的。</p>
+        </div>
+        <div class="timeline">
+          <div class="timeline-item">
+            <div class="timeline-year">2021.11</div>
+            鮑爾稱通膨為「暫時性」——後來成為他職業生涯最大的「烏龍預測」
+          </div>
+          <div class="timeline-item">
+            <div class="timeline-year">2022.03</div>
+            首次升息，開始連續七次 <span class="abbr-term">FOMC<span class="en">（Federal Open Market Committee，聯邦公開市場委員會）</span></span> 升息
+          </div>
+          <div class="timeline-item">
+            <div class="timeline-year">2022.06-11</div>
+            連續四次升 3 碼（每次 0.75%）——近代史上最激進的升息序列
+          </div>
+          <div class="timeline-item">
+            <div class="timeline-year">2023.07</div>
+            利率達到 5.25%-5.5% 峰值，本輪升息告一段落
+          </div>
+          <div class="timeline-item">
+            <div class="timeline-year">2024.09</div>
+            開始降息，<span class="term">軟著陸<span class="en">（Soft Landing）</span></span>初步實現，但通膨黏著仍是隱憂
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Fed 隱藏問題 -->
+  <div class="level-block">
+    <div class="level-header">
+      <div class="level-dot dot-expert"></div>
+      <span class="level-label label-expert">深潛</span>
+      <span class="level-title">⚠️ Fed 的隱藏問題：三個沒人想大聲說的麻煩</span>
+    </div>
+
+    <div class="concept" onclick="toggleConcept(this)">
+      <div class="concept-head">
+        <div class="concept-name"><span class="concept-emoji">🏛️</span>隱藏問題①：Fed 的獨立性正面臨史上最強政治壓力</div>
+        <span class="concept-toggle">+</span>
+      </div>
+      <div class="concept-body">
+        <p class="def">2025-2026 年，美國行政當局公開施壓 Fed 降息，甚至傳出「研究是否能提前撤換 Fed 主席」的消息。這對全球金融體系是一個極度敏感的警訊——因為「Fed 獨立性」是美元全球信用的核心之一。</p>
+        <div class="monster-diagram">
+          <h3>🔗 Fed 獨立性若被侵蝕，連鎖效應</h3>
+          <div class="flow">
+            <div class="flow-box">政治力量左右 Fed 決策（如強制降息）</div>
+            <div class="flow-arrow">↓</div>
+            <div class="flow-box">市場懷疑 Fed 是否在認真控制通膨</div>
+            <div class="flow-arrow">↓</div>
+            <div class="flow-box"><span class="term">通膨預期<span class="en">（Inflation Expectations）</span></span>失控 → 長期<span class="term">殖利率<span class="en">（Yield）</span></span>暴衝</div>
+            <div class="flow-arrow">↓</div>
+            <div class="flow-box">美元信用動搖 → 外國拋售美債</div>
+            <div class="flow-arrow">↓</div>
+            <div class="flow-box danger">美元霸權基礎受損 → 全球金融秩序重組風險</div>
+          </div>
+        </div>
+        <div class="keypoint">
+          <span class="keypoint-icon">📡</span>
+          <span>這不是危言聳聽。1970 年代美國尼克森總統施壓 Fed 降息，最終造成通膨失控（高達 14%），史稱「<span class="term">大通膨<span class="en">（Great Inflation）</span></span>（Great Inflation）」。歷史有先例，市場對此極度敏感。</span>
+        </div>
+      </div>
+    </div>
+
+    <div class="concept" onclick="toggleConcept(this)">
+      <div class="concept-head">
+        <div class="concept-name"><span class="concept-emoji">🔥</span>隱藏問題②：Fed 自己也是「鮑爾被炒魷魚風險」的市場定價標的</div>
+        <span class="concept-toggle">+</span>
+      </div>
+      <div class="concept-body">
+        <p class="def">2025 年，「鮑爾（Powell）是否會提前被撤換」成為市場的真實風險定價因子。每次白宮批評 Fed 的聲明，美元就跌、美債<span class="term">殖利率<span class="en">（Yield）</span></span>飆——市場在賣「Fed 獨立性」的保險。</p>
+        <div class="example">
+          <div class="example-label">📊 市場的反應邏輯</div>
+          <p>投資人邏輯：「如果 Fed 主席被換成聽話的人、強制降息，通膨就會失控，美元就不值錢，我要減持美元資產。」——這個預期本身就讓美元下跌、美債<span class="term">殖利率<span class="en">（Yield）</span></span>上升，形成自我實現的市場壓力。</p>
+        </div>
+        <div class="keypoint">
+          <span class="keypoint-icon">🗓️</span>
+          <span>鮑爾任期到 2026 年 5 月。在此之前，「下一任 Fed 主席是誰、傾向為何」將是 2025-2026 年金融市場最大的政治風險之一，台股投資人也要密切追蹤。</span>
+        </div>
+      </div>
+    </div>
+
+    <div class="concept" onclick="toggleConcept(this)">
+      <div class="concept-head">
+        <div class="concept-name"><span class="concept-emoji">💰</span>隱藏問題③：Fed 自己也在虧損——利息支出超過利息收入</div>
+        <span class="concept-toggle">+</span>
+      </div>
+      <div class="concept-body">
+        <p class="def">這是很少人知道的事：2022 年升息後，Fed 自己的財務狀況出現虧損。因為它需要付給銀行準備金高額利息（5%+），但手上持有的低利率舊債收益率只有 2% 左右。</p>
+        <div class="formula">
+          Fed 的財務邏輯：<br>
+          <span>收入：</span>持有債券的利息（平均低利率約 2%）<br>
+          <span>支出：</span>付給銀行準備金的利息（約 5%+）<br>
+          → 倒虧，從 2022 年底開始，累計虧損超過 <span>2000 億美元</span>
+        </div>
+        <div class="example">
+          <div class="example-label">🏦 比喻</div>
+          <p>Fed 像一間銀行：它把錢以 2% 借出去（買債），卻要以 5% 支付存款利率（銀行準備金）。這間銀行正在「倒貼」——雖然央行不會因此破產，但它每年少上繳給財政部的收益（過去每年都上繳數十億），等於間接加重<span class="term">財政赤字<span class="en">（Fiscal Deficit）</span></span>。</p>
+        </div>
+        <div class="keypoint">
+          <span class="keypoint-icon">🎓</span>
+          <span>Fed 的虧損在會計上記為「<span class="term">遞延資產<span class="en">（Deferred Asset）</span></span>（Deferred Asset）」而非負債，這讓它不需要像商業銀行一樣被迫增資。但這個設計是否合理、是否應該透明化，是現在央行財務獨立性研究的熱門議題。</span>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+</div><!-- end main -->
+
+<div class="footer">
+  製作日期：2026.06.05 ｜ 資料來源：<strong>鉅亨網</strong>（美債又多一個麻煩？<span class="term">凸性怪獸<span class="en">（Convexity Monster）</span></span>正逐漸甦醒）<br>
+  本圖解僅供教育用途，不構成投資建議。投資有風險，請謹慎評估。
+</div>
+
+<script>
+  function showSection(id, btn) {
+    document.querySelectorAll('.section').forEach(s => s.classList.remove('active'));
+    document.querySelectorAll('.nav-tab').forEach(t => t.classList.remove('active'));
+    document.getElementById(id).classList.add('active');
+    btn.classList.add('active');
+    window.scrollTo({ top: 0, behavior: 'smooth' });
+  }
+
+  function toggleConcept(el) {
+    el.classList.toggle('open');
+  }
+</script>
+</body>
+</html>
