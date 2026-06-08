@@ -180,13 +180,23 @@
 
   /* LEVEL BLOCK */
   .level-block {
-    margin-bottom: 48px;
+    margin-bottom: 36px;
+    background: var(--paper);
+    border-radius: 10px;
+    padding: 20px 20px 8px;
+    border: 1px solid var(--border);
   }
+  /* 層級區塊背景色 */
+  .level-block:has(.label-easy)   { background: #f8fdf9; border-color: #c8e6d4; }
+  .level-block:has(.label-mid)    { background: #fdf9f2; border-color: #e8d4aa; }
+  .level-block:has(.label-hard)   { background: #fdf7f3; border-color: #ddc0a8; }
+  .level-block:has(.label-expert) { background: #f8f5fd; border-color: #ccc0e0; }
+
   .level-header {
     display: flex;
     align-items: center;
     gap: 14px;
-    margin-bottom: 24px;
+    margin-bottom: 16px;
     padding-bottom: 12px;
     border-bottom: 2px solid var(--border);
   }
@@ -224,11 +234,45 @@
   .concept {
     background: white;
     border: 1px solid var(--border);
-    border-radius: 2px;
-    margin-bottom: 20px;
+    border-left: 4px solid var(--border);
+    border-radius: 6px;
+    margin-bottom: 14px;
     overflow: hidden;
-    box-shadow: 2px 2px 0 var(--border);
+    box-shadow: 0 2px 8px rgba(45,36,22,0.07);
+    transition: box-shadow 0.2s, transform 0.15s;
   }
+  .concept:hover {
+    box-shadow: 0 4px 16px rgba(45,36,22,0.12);
+    transform: translateY(-1px);
+  }
+  .concept.open {
+    box-shadow: 0 4px 20px rgba(45,36,22,0.13);
+    transform: translateY(-1px);
+  }
+
+  /* 層級左邊框顏色 */
+  .level-block:has(.label-easy) .concept  { border-left-color: var(--easy); }
+  .level-block:has(.label-mid) .concept   { border-left-color: var(--mid); }
+  .level-block:has(.label-hard) .concept  { border-left-color: var(--hard); }
+  .level-block:has(.label-expert) .concept{ border-left-color: var(--expert); }
+
+  /* 層級卡頭背景 */
+  .level-block:has(.label-easy) .concept-head   { background: #f2f9f5; }
+  .level-block:has(.label-mid) .concept-head    { background: #fdf5ea; }
+  .level-block:has(.label-hard) .concept-head   { background: #faf3ee; }
+  .level-block:has(.label-expert) .concept-head { background: #f6f3fa; }
+
+  .level-block:has(.label-easy) .concept-head:hover   { background: #e4f2ec; }
+  .level-block:has(.label-mid) .concept-head:hover    { background: #f7e8d4; }
+  .level-block:has(.label-hard) .concept-head:hover   { background: #f5e8de; }
+  .level-block:has(.label-expert) .concept-head:hover { background: #ede8f5; }
+
+  /* 展開時內容背景 */
+  .level-block:has(.label-easy) .concept.open .concept-body   { background: #fafdf9; }
+  .level-block:has(.label-mid) .concept.open .concept-body    { background: #fefaf4; }
+  .level-block:has(.label-hard) .concept.open .concept-body   { background: #fdfaf7; }
+  .level-block:has(.label-expert) .concept.open .concept-body { background: #faf8fd; }
+
   .concept-head {
     display: flex;
     justify-content: space-between;
@@ -242,24 +286,27 @@
   }
   .concept-head:hover { background: #f0e4d0; }
   .concept-name {
-    font-size: 16px;
+    font-size: 15.5px;
     font-weight: 700;
     display: flex;
     align-items: center;
     gap: 10px;
+    line-height: 1.5;
   }
-  .concept-emoji { font-size: 18px; }
+  .concept-emoji { font-size: 18px; flex-shrink: 0; }
   .concept-toggle {
     font-size: 20px;
     color: var(--muted);
     transition: transform 0.25s;
     flex-shrink: 0;
+    margin-left: 12px;
   }
   .concept.open .concept-toggle { transform: rotate(45deg); }
 
   .concept-body {
     display: none;
     padding: 24px 24px 20px;
+    background: white;
   }
   .concept.open .concept-body { display: block; }
 
